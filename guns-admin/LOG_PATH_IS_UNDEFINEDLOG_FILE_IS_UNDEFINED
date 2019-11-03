@@ -1,0 +1,36 @@
+2019-11-03 22:32:59,944 [INFO] [restartedMain] com.stylefeng.guns.GunsApplication [StartupInfoLogger.java : 48] Starting GunsApplication on DESKTOP-VHELH13 with PID 13128 (C:\guanqing\practise\business\genetopc\guns-admin\target\classes started by information in C:\guanqing\practise\business\genetopc\guns-admin)
+2019-11-03 22:32:59,948 [INFO] [restartedMain] com.stylefeng.guns.GunsApplication [SpringApplication.java : 593] No active profile set, falling back to default profiles: default
+2019-11-03 22:33:00,226 [INFO] [restartedMain] o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext [AbstractApplicationContext.java : 583] Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@841ac53: startup date [Sun Nov 03 22:33:00 CST 2019]; root of context hierarchy
+2019-11-03 22:33:05,271 [INFO] [restartedMain] o.s.data.repository.config.RepositoryConfigurationDelegate [RepositoryConfigurationDelegate.java : 165] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-11-03 22:33:07,042 [INFO] [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java : 327] Bean 'shiroConfig' of type [com.stylefeng.guns.config.web.ShiroConfig$$EnhancerBySpringCGLIB$$f8a14a17] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-03 22:33:07,192 [INFO] [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java : 327] Bean 'rememberMeCookie' of type [org.apache.shiro.web.servlet.SimpleCookie] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-03 22:33:08,125 [INFO] [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java : 327] Bean 'rememberMeManager' of type [org.apache.shiro.web.mgt.CookieRememberMeManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-03 22:33:08,138 [INFO] [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java : 327] Bean 'ehCacheConfig' of type [com.stylefeng.guns.config.EhCacheConfig$$EnhancerBySpringCGLIB$$3b0ca1f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-03 22:33:08,151 [INFO] [restartedMain] org.springframework.cache.ehcache.EhCacheManagerFactoryBean [EhCacheManagerFactoryBean.java : 130] Initializing EhCache CacheManager
+2019-11-03 22:33:08,364 [INFO] [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java : 327] Bean 'ehcache' of type [org.springframework.cache.ehcache.EhCacheManagerFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-03 22:33:08,379 [INFO] [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java : 327] Bean 'getCacheShiroManager' of type [org.apache.shiro.cache.ehcache.EhCacheManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-11-03 22:33:08,384 [WARN] [restartedMain] o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext [AbstractApplicationContext.java : 551] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webConfig': Unsatisfied dependency expressed through field 'gunsProperties'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shiroFilter' defined in class path resource [com/stylefeng/guns/config/web/ShiroConfig.class]: Unsatisfied dependency expressed through method 'shiroFilter' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'methodInvokingFactoryBean' defined in class path resource [com/stylefeng/guns/config/web/ShiroConfig.class]: Unsatisfied dependency expressed through method 'methodInvokingFactoryBean' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'securityManager' defined in class path resource [com/stylefeng/guns/config/web/ShiroConfig.class]: Unsatisfied dependency expressed through method 'securityManager' parameter 2; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'securityManager': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2019-11-03 22:33:08,385 [INFO] [restartedMain] org.springframework.cache.ehcache.EhCacheManagerFactoryBean [EhCacheManagerFactoryBean.java : 187] Shutting down EhCache CacheManager
+2019-11-03 22:33:08,411 [INFO] [restartedMain] o.s.b.a.logging.AutoConfigurationReportLoggingInitializer [AutoConfigurationReportLoggingInitializer.java : 101] 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-11-03 22:33:08,424 [ERROR] [restartedMain] o.s.boot.diagnostics.LoggingFailureAnalysisReporter [LoggingFailureAnalysisReporter.java : 42] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   webConfig (field private com.stylefeng.guns.config.properties.GunsProperties com.stylefeng.guns.config.web.WebConfig.gunsProperties)
+      ↓
+   shiroFilter defined in class path resource [com/stylefeng/guns/config/web/ShiroConfig.class]
+      ↓
+   methodInvokingFactoryBean defined in class path resource [com/stylefeng/guns/config/web/ShiroConfig.class]
+┌─────┐
+|  securityManager defined in class path resource [com/stylefeng/guns/config/web/ShiroConfig.class]
+└─────┘
+
+
