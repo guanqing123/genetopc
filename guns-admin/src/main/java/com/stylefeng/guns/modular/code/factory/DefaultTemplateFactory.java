@@ -46,7 +46,7 @@ public class DefaultTemplateFactory {
         genQo.setAuthor("guanqing");
         genQo.setProjectPackage(GunsApplication.class.getPackage().getName());
         genQo.setCorePackage(CoreFlag.class.getPackage().getName());
-        genQo.setIgnoreTabelPrefix("app_");
+        genQo.setIgnoreTabelPrefix("gene_");
         genQo.setModuleName("custom");
         genQo.setParentMenuName("系统管理");
         return genQo;

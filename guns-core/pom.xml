@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.stylefeng</groupId>
         <artifactId>guns-parent</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>1.0.4-SNAPSHOT</version>
         <relativePath>../guns-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

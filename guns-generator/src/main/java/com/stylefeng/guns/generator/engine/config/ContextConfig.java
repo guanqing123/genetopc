@@ -20,8 +20,8 @@ public class ContextConfig {
 
     private String proPackage = "com.stylefeng.guns.admin";
     private String coreBasePackage = "com.stylefeng.guns.core";
-    private String modelPackageName = "com.stylefeng.guns.modular.system.model";        //model的包名
-    private String modelMapperPackageName = "com.stylefeng.guns.modular.system.dao";    //model的dao
+    private String modelPackageName = "com.stylefeng.guns.modular.custom.model";        //model的包名
+    private String modelMapperPackageName = "com.stylefeng.guns.modular.custom.dao";    //model的dao
     private String entityName;              //实体的名称
 
     private Boolean controllerSwitch = true;    //是否生成控制器代码开关
