@@ -23,5 +23,13 @@
     <sql id="Base_Column_List">
         projectid, xmmc, syz, xmyy, state, jzsj, jd, slt_key AS sltKey, slt_path AS sltPath, jdt_key AS jdtKey, jdt_path AS jdtPath, xmjs, cjbz
     </sql>
+    
+    <select id="getProjectListByCondition" resultMap="BaseResultMap">
+    	select * from gene_project where 1=1
+    	<if test="condition!=null and condition!=''">
+    		and xmmc like concat('%',#{condition},'%')
+    	</if>
+    	order by projectid desc
+    </select>
 
 </mapper>

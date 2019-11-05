@@ -1,6 +1,6 @@
 @layout("/common/_container.html"){
 <link rel="stylesheet" href="${ctxPath}/static/css/plugins/switchery/switchery.css">
-<link rel="stylesheet" href="${ctxPath}/static/css/plugins/summernote/summernote.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/summernote/0.8.11/summernote.css">
 <style>
 	.btn-default{
 		background: none;
@@ -28,10 +28,10 @@
                 <div class="col-sm-6">
                 		<#input id="projectid" name="项目编号" underline="true" readonly="true"/>
 			            <#input id="xmyy" name="项目用药" underline="true"/>
-                        <div class="form-group">
+						<div class="form-group">
                             <label class="col-sm-3 control-label">截止时间</label>
                             <div class="col-sm-9">
-                                <input id="jzsj" class="laydate-icon form-control layer-date">
+                                <input class="laydate-icon form-control layer-date" id="jzsj" name="jzsj"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -58,11 +58,11 @@
                		<div class="col-sm-1"><input type="hidden" id="xmjsContent" value=""/></div>
                     <div class="col-sm-5 b-r">
                     	<b>项目介绍</b>
-                        <textarea id="xmjs" class="summernote"></textarea>
+                    	<div id="xmjs" class="summernote"></div>
                     </div>
                     <div class="col-sm-5">
                     	<b>参加标准</b>
-                    	<textarea id="cjbz" class="summernote"></textarea>
+                    	<div id="cjbz" class="summernote"></div>
                     </div>
                     <div class="col-sm-1"><input type="hidden" id="cjbzContent" value=""/></div>
                </div>
@@ -82,7 +82,7 @@
     </div>
 </div>
 <script src="${ctxPath}/static/js/plugins/switchery/switchery.js"></script>
-<script src="${ctxPath}/static/js/plugins/summernote/summernote.min.js"></script>
+<script src="${ctxPath}/static/js/plugins/summernote/summernote.js"></script>
 <script src="${ctxPath}/static/js/plugins/summernote/summernote-zh-CN.js"></script>
 <script src="${ctxPath}/static/modular/custom/project/project_info.js"></script>
 @}

@@ -1,4 +1,5 @@
 @layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/switchery/switchery.css">
 <div class="row">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
@@ -10,7 +11,7 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#NameCon id="condition" name="项目名称" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Project.search()"/>
@@ -34,5 +35,6 @@
         </div>
     </div>
 </div>
+<script src="${ctxPath}/static/js/plugins/switchery/switchery.js"></script>
 <script src="${ctxPath}/static/modular/custom/project/project.js"></script>
 @}

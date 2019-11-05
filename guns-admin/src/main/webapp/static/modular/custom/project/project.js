@@ -9,24 +9,54 @@ var Project = {
 };
 
 /**
+ * 初始化switchery
+ */
+Project.setSwitchery = function (switchElement, checkedBool) {
+    if ((checkedBool && !switchElement.isChecked()) || (!checkedBool && switchElement.isChecked())) {
+        switchElement.setPosition(true);
+        switchElement.handleOnchange(true);
+    }
+}
+
+/**
  * 初始化表格的列
  */
 Project.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '主键', field: 'projectid', visible: true, align: 'center', valign: 'middle'},
+        	{
+        		title: '缩略图', field: 'sltPath', visible: true, align: 'center', valign: 'middle',
+                formatter: function (value, row, index) {
+                    var h;
+                    if (row.sltPath != null) {
+                        var url = row.sltPath;
+                        h = '<div style="height: 30px;overflow: hidden"><img style="width:30px" src="' + url + '" /></a></div>'
+                    }
+                    return h;
+                }
+        	},
+            {title: '项目编号', field: 'projectid', visible: true, align: 'center', valign: 'middle'},
             {title: '项目名称', field: 'xmmc', visible: true, align: 'center', valign: 'middle'},
             {title: '适应症', field: 'syz', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'xmyy', visible: true, align: 'center', valign: 'middle'},
-            {title: '项目状态', field: 'state', visible: true, align: 'center', valign: 'middle'},
+            {title: '项目用药', field: 'xmyy', visible: true, align: 'center', valign: 'middle'},
+            {
+            	title: '项目状态', field: 'state', visible: true, align: 'center', valign: 'middle',
+            	formatter: function(value, row, index) {
+            		return '<div class="active"><input type="checkbox" id="act_' + row.projectid + '" class="js-switch" /></div>'
+            	},
+            	events: 'operatActive'
+            },
             {title: '截止时间', field: 'jzsj', visible: true, align: 'center', valign: 'middle'},
-            {title: '焦点', field: 'jd', visible: true, align: 'center', valign: 'middle'},
-            {title: '缩略图key', field: 'sltKey', visible: true, align: 'center', valign: 'middle'},
-            {title: '缩略图路径', field: 'sltPath', visible: true, align: 'center', valign: 'middle'},
-            {title: '焦点图key', field: 'jdtKey', visible: true, align: 'center', valign: 'middle'},
-            {title: '焦点图路径', field: 'jdtPath', visible: true, align: 'center', valign: 'middle'},
-            {title: '项目介绍', field: 'xmjs', visible: true, align: 'center', valign: 'middle'},
-            {title: '参加标准', field: 'cjbz', visible: true, align: 'center', valign: 'middle'}
+            {
+            	title: '焦点', field: 'jd', visible: true, align: 'center', valign: 'middle',
+            	formatter: function (value, row, index) {
+            		if (row.jd === 1) {
+            			return '是'
+            		} else {
+            			return '否'
+            		}
+            	}
+            }
     ];
 };
 
@@ -104,7 +134,14 @@ Project.search = function () {
 
 $(function () {
     var defaultColunms = Project.initColumn();
-    var table = new BSTable(Project.id, "/project/list", defaultColunms);
-    table.setPaginationType("client");
+    var table = new BSTable(Project.id, "/project/list", defaultColunms, function(data) {
+    	$.each(data.rows, function (i, v) {
+            var acSwitch = new Switchery(document.getElementById('act_' + v.projectid), {color: '#1AB394', size: 'small' });
+            if (v.state === 1) {
+            	Project.setSwitchery(acSwitch, true);
+            }
+        });
+	});
+    table.setPaginationType("server");
     Project.table = table.init();
 });

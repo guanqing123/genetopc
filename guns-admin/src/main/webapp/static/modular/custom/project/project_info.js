@@ -73,21 +73,16 @@ ProjectInfoDlg.close = function() {
 /**
  * 收集数据
  */
-ProjectInfoDlg.collectData = function() {
+ProjectInfoDlg.collectData = function(base64Data, state) {
     this
-    .set('projectid')
     .set('xmmc')
     .set('syz')
     .set('xmyy')
-    .set('state')
     .set('jzsj')
-    .set('jd')
-    .set('sltKey')
-    .set('sltPath')
-    .set('jdtKey')
-    .set('jdtPath')
-    .set('xmjs')
-    .set('cjbz');
+    .set('xmjs', $("#xmjs").summernote('code'))
+    .set('cjbz', $("#cjbz").summernote('code'))
+    .set('base64Data', base64Data)
+    .set('state', state?1:0);
 }
 
 /**
@@ -108,19 +103,28 @@ ProjectInfoDlg.addSubmit = function() {
 		return;
 	}
 	
-    this.clearData();
-    this.collectData();
-
-    //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/project/add", function(data){
-        Feng.success("添加成功!");
-        window.parent.Project.table.refresh();
-        ProjectInfoDlg.close();
-    },function(data){
-        Feng.error("添加失败!" + data.responseJSON.message + "!");
-    });
-    ajax.set(this.projectInfoData);
-    ajax.start();
+	var base64Data = $("#imgview").attr("src");
+	if (base64Data.length < 1) {
+		Feng.error('缩略图必须上传');
+		return;
+	}
+	
+	this.clearData();
+	this.collectData(base64Data, document.querySelector('.js-switch').checked);
+	
+	$.ajax({
+		url : Feng.ctxPath + "/project/add",
+		type : 'post',
+		data : this.projectInfoData,
+		success: function (data) {
+			Feng.success("添加成功!");
+			window.parent.Project.table.refresh();
+			ProjectInfoDlg.close();
+		},
+		error: function (r, m, e) {
+			Feng.error(r.responseJSON.message)
+		}
+	})
 }
 
 /**
@@ -176,14 +180,18 @@ $(function() {
 	var init = new Switchery(elem);
 	
 	// 截止日期
-    laydate({
+	laydate({
         elem: '#jzsj', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-        event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+        event: 'focus', //响应事件。如果没有传入event，则按照默认的click
+        choose: function(dates){
+        	$('#projectInfoForm').data("bootstrapValidator").resetForm();
+            $('#projectInfoForm').bootstrapValidator('validate');
+        }
     });
 	
     // summernote初始化
     $(".summernote").summernote({
-	  toolbar: [
+    	toolbar: [
 		    // [groupName, [list of button]]
 		    ['style', ['bold', 'italic', 'underline', 'clear']],
 		    ['fontsize', ['fontsize']],
@@ -191,9 +199,7 @@ $(function() {
 		    ['para', ['ul', 'ol', 'paragraph']],
 		    ['height', ['height']]
 		  ],
-        dialogsInBody: true,
-        disableDragAndDrop: false,
-        height:"200px",
+        height:"100px",
         tabsize: 2,
         lang: 'zh-CN',
         codemirror: {

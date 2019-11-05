@@ -1,6 +1,10 @@
 package com.stylefeng.guns.modular.custom.service;
 
 import com.stylefeng.guns.modular.custom.model.Project;
+
+import java.util.List;
+
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -12,5 +16,7 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-11-04
  */
 public interface IProjectService extends IService<Project> {
+
+	List<Project> getProjectListByCondition(Page<Project> page, String condition);
 
 }

@@ -6,7 +6,7 @@
  * @author fengshuonan
  */
 (function () {
-    var BSTable = function (bstableId, url, columns) {
+    var BSTable = function (bstableId, url, columns, callback) {
         this.btInstance = null;					//jquery和BootStrapTable绑定的对象
         this.bstableId = bstableId;
         this.url = Feng.ctxPath + url;
@@ -17,6 +17,7 @@
         this.height = 500;						//默认表格高度665
         this.data = {};
         this.queryParams = {}; // 向后台传递的自定义参数
+        this.callback = callback;
     };
 
     BSTable.prototype = {
@@ -63,7 +64,12 @@
                         toggle: 'glyphicon-list-alt',
                         columns: 'glyphicon-list'
                     },
-                    iconSize: 'outline'
+                    iconSize: 'outline',
+                    callback: this.callback,
+                    onLoadSuccess: function(data) {
+                    	if (typeof this.callback === 'function')
+                    		this.callback(data)
+                    }
                 });
             return this;
         },

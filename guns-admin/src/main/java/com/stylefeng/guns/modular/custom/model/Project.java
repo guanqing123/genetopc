@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -24,7 +27,8 @@ public class Project extends Model<Project> {
     /**
      * 主键
      */
-    private String projectid;
+    @TableId(type = IdType.AUTO)
+    private Integer projectid;
     /**
      * 项目名称
      */
@@ -41,7 +45,7 @@ public class Project extends Model<Project> {
     /**
      * 截止时间
      */
-    private Date jzsj;
+    private String jzsj;
     /**
      * 焦点
      */
@@ -74,13 +78,17 @@ public class Project extends Model<Project> {
      * 参加标准
      */
     private String cjbz;
+    /**
+     * base64图片
+     */
+    @TableField(exist = false)
+    private String base64Data;
 
-
-    public String getProjectid() {
+	public Integer getProjectid() {
         return projectid;
     }
 
-    public void setProjectid(String projectid) {
+    public void setProjectid(Integer projectid) {
         this.projectid = projectid;
     }
 
@@ -116,11 +124,11 @@ public class Project extends Model<Project> {
         this.state = state;
     }
 
-    public Date getJzsj() {
+    public String getJzsj() {
         return jzsj;
     }
 
-    public void setJzsj(Date jzsj) {
+    public void setJzsj(String jzsj) {
         this.jzsj = jzsj;
     }
 
@@ -179,6 +187,14 @@ public class Project extends Model<Project> {
     public void setCjbz(String cjbz) {
         this.cjbz = cjbz;
     }
+    
+    public String getBase64Data() {
+		return base64Data;
+	}
+
+	public void setBase64Data(String base64Data) {
+		this.base64Data = base64Data;
+	}
 
     @Override
     protected Serializable pkVal() {
