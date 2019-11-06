@@ -19,6 +19,7 @@ import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.core.common.exception.FileUploadException;
 import com.stylefeng.guns.core.domain.FilePath;
 import jodd.datetime.JDateTime;
+import lombok.extern.slf4j.Slf4j;
 
 
 
@@ -28,6 +29,7 @@ import jodd.datetime.JDateTime;
  * 阿里对象存储工具类
  */
 @Service
+@Slf4j
 public class OssUtil {
 
     @Autowired
@@ -36,7 +38,12 @@ public class OssUtil {
     // endpoint 是访问OSS的域名.
     private static String endpoint = "https://oss-cn-qingdao.aliyuncs.com";
 
-    
+    /**
+     * 字节数组 上传
+     * @param bs
+     * @param suffix
+     * @return
+     */
     public FilePath transferTo(byte[] bs, String suffix) {
     	JDateTime jdt = new JDateTime();
         jdt.setCurrentTime();
@@ -68,7 +75,7 @@ public class OssUtil {
     }
     
     /**
-     * 文件上传 单文件
+     * 单文件 上传
      *
      * @param file
      * @return
@@ -115,6 +122,11 @@ public class OssUtil {
         }
     }
     
+    /**
+     * 字节数组流数组 上传
+     * @param ins
+     * @return
+     */
     public List<FilePath> transferTo(ByteArrayInputStream[] ins){
         JDateTime jdt = new JDateTime();
         jdt.setCurrentTime();
@@ -202,6 +214,10 @@ public class OssUtil {
         return paths;
     }
 
+    /**
+     * 多文件删除
+     * @param paths
+     */
     public void deleteObjects(List<FilePath> paths) {
         // 生成OSSClient.
         OSSClient ossClient = new OSSClient(endpoint, aliyunProp.getOss().getAccessKeyId(), aliyunProp.getOss().getAccessKeySecret());
@@ -211,6 +227,24 @@ public class OssUtil {
                 ossClient.deleteObject(bucketName, filePath.getFileKey());
                 System.out.println("ossClient.deleteObject >> " + filePath.getFileName() + "\t" + filePath.getFileKey());
             }
+        } catch (OSSException e) {
+            e.printStackTrace();
+        } finally {
+            ossClient.shutdown();
+        }
+    }
+    
+    /**
+     * 单文件删除
+     * @param fileKey
+     */
+    public void deleteObject(String fileKey) {
+    	// 生成OSSClient.
+        OSSClient ossClient = new OSSClient(endpoint, aliyunProp.getOss().getAccessKeyId(), aliyunProp.getOss().getAccessKeySecret());
+        try {
+            String bucketName = aliyunProp.getOss().getBucket();
+            ossClient.deleteObject(bucketName, fileKey);
+            log.error("fileKey=>{}", fileKey);
         } catch (OSSException e) {
             e.printStackTrace();
         } finally {

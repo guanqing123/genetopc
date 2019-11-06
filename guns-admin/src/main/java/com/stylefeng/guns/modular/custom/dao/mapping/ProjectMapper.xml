@@ -11,6 +11,7 @@
         <result column="state" property="state" />
         <result column="jzsj" property="jzsj" />
         <result column="jd" property="jd" />
+        <result column="jd_order" property="jdOrder" />
         <result column="slt_key" property="sltKey" />
         <result column="slt_path" property="sltPath" />
         <result column="jdt_key" property="jdtKey" />
@@ -26,10 +27,16 @@
     
     <select id="getProjectListByCondition" resultMap="BaseResultMap">
     	select * from gene_project where 1=1
+    	<if test="jd!=null and jd!=''">
+    		and jd in (${jd})
+    	</if>
     	<if test="condition!=null and condition!=''">
     		and xmmc like concat('%',#{condition},'%')
     	</if>
     	order by projectid desc
     </select>
 
+	<update id="modifyState">
+		update gene_project set state = #{state} where projectid = #{projectid}
+	</update>
 </mapper>

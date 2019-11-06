@@ -51,6 +51,11 @@ public class Project extends Model<Project> {
      */
     private Integer jd;
     /**
+     * 焦点顺序
+     */
+    @TableField("jd_order")
+    private Integer jdOrder;
+	/**
      * 缩略图key
      */
     @TableField("slt_key")
@@ -139,6 +144,14 @@ public class Project extends Model<Project> {
     public void setJd(Integer jd) {
         this.jd = jd;
     }
+    
+    public Integer getJdOrder() {
+		return jdOrder;
+	}
+
+	public void setJdOrder(Integer jdOrder) {
+		this.jdOrder = jdOrder;
+	}
 
     public String getSltKey() {
         return sltKey;
@@ -211,6 +224,7 @@ public class Project extends Model<Project> {
         ", state=" + state +
         ", jzsj=" + jzsj +
         ", jd=" + jd +
+        ", jdOrder="+ jdOrder +
         ", sltKey=" + sltKey +
         ", sltPath=" + sltPath +
         ", jdtKey=" + jdtKey +

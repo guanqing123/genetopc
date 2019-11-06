@@ -11,6 +11,7 @@
         this.bstableId = bstableId;
         this.url = Feng.ctxPath + url;
         this.method = "post";
+        this.pagination = true; 				//gq
         this.paginationType = "server";			//默认分页方式是服务器分页,可选项"client"
         this.toolbarId = bstableId + "Toolbar";
         this.columns = columns;
@@ -38,7 +39,7 @@
                     toolbar: "#" + this.toolbarId,//顶部工具条
                     striped: true,     			//是否显示行间隔色
                     cache: false,      			//是否使用缓存,默认为true
-                    pagination: true,     		//是否显示分页（*）
+                    pagination: this.pagination, //是否显示分页（*）
                     sortable: true,      		//是否启用排序
                     sortOrder: "desc",     		//排序方式
                     pageNumber: 1,      			//初始化加载第一页，默认第一页
@@ -57,7 +58,7 @@
                     clickToSelect: true,    	//是否启用点击选中行
                     searchOnEnterKey: true,		//设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
                     columns: this.columns,		//列数组
-                    pagination: true,			//是否显示分页条
+                    pagination: this.pagination,//是否显示分页条
                     height: this.height,
                     icons: {
                         refresh: 'glyphicon-repeat',
@@ -81,12 +82,17 @@
             this.queryParams = param;
         },
         /**
+         * 设置是否分页 gq
+         */
+        setPagination: function (pagination) {
+			this.pagination = pagination;
+		},
+        /**
          * 设置分页方式：server 或者 client
          */
         setPaginationType: function (type) {
             this.paginationType = type;
         },
-
         /**
          * 设置ajax post请求时候附带的参数
          */

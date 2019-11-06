@@ -1,5 +1,5 @@
 /**
- * 初始化项目列表详情对话框
+ * 初始化添加项目对话框
  */
 var ProjectInfoDlg = {
     projectInfoData : {},
@@ -124,27 +124,7 @@ ProjectInfoDlg.addSubmit = function() {
 		error: function (r, m, e) {
 			Feng.error(r.responseJSON.message)
 		}
-	})
-}
-
-/**
- * 提交修改
- */
-ProjectInfoDlg.editSubmit = function() {
-
-    this.clearData();
-    this.collectData();
-
-    //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/project/update", function(data){
-        Feng.success("修改成功!");
-        window.parent.Project.table.refresh();
-        ProjectInfoDlg.close();
-    },function(data){
-        Feng.error("修改失败!" + data.responseJSON.message + "!");
-    });
-    ajax.set(this.projectInfoData);
-    ajax.start();
+	});
 }
 
 /**

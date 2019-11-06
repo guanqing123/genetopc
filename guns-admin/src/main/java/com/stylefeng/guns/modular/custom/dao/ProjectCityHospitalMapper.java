@@ -1,0 +1,16 @@
+package com.stylefeng.guns.modular.custom.dao;
+
+import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+/**
+ * <p>
+ * 城市医院表 Mapper 接口
+ * </p>
+ *
+ * @author guanqing123
+ * @since 2019-11-06
+ */
+public interface ProjectCityHospitalMapper extends BaseMapper<ProjectCityHospital> {
+
+}

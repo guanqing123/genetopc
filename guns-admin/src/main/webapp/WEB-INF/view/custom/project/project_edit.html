@@ -1,40 +1,87 @@
 @layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/switchery/switchery.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/summernote/0.8.11/summernote.css">
+<style>
+	.btn-default{
+		background: none;
+		color:#333;
+	}
+</style>
 <div class="ibox float-e-margins">
     <div class="ibox-content">
-        <div class="form-horizontal">
-
-            <input type="hidden" id="id" value="${item.id}">
-
+        <div class="form-horizontal" id="projectInfoForm">
+        
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="projectid" name="主键" value="${item.projectid}" underline="true"/>
-                            <#input id="xmmc" name="项目名称" value="${item.xmmc}" underline="true"/>
-                            <#input id="syz" name="适应症" value="${item.syz}" underline="true"/>
-                            <#input id="xmyy" name="" value="${item.xmyy}" underline="true"/>
-                            <#input id="state" name="项目状态" value="${item.state}" underline="true"/>
-                            <#input id="jzsj" name="截止时间" value="${item.jzsj}" underline="true"/>
-                            <#input id="jd" name="焦点" value="${item.jd}" />
+                     	<#input id="xmmc" name="项目名称" value="${item.xmmc}" underline="true"/>
+                     	<#input id="syz" name="适应症" value="${item.syz}" underline="true"/>
+                     	<div class="form-group">
+						    <label class="col-sm-3 control-label">项目状态</label>
+						    <div class="col-sm-9">
+						    	<input id="state" type="hidden" value="${item.state}" />
+						        <input type="checkbox" class="js-switch" />
+						    </div>
+						</div>
+    					<div class="hr-line-dashed"></div>
                 </div>
-
                 <div class="col-sm-6">
-                            <#input id="sltKey" name="缩略图key" value="${item.sltKey}" underline="true"/>
-                            <#input id="sltPath" name="缩略图路径" value="${item.sltPath}" underline="true"/>
-                            <#input id="jdtKey" name="焦点图key" value="${item.jdtKey}" underline="true"/>
-                            <#input id="jdtPath" name="焦点图路径" value="${item.jdtPath}" underline="true"/>
-                            <#input id="xmjs" name="项目介绍" value="${item.xmjs}" underline="true"/>
-                            <#input id="cjbz" name="参加标准" value="${item.cjbz}" />
+                		<#input id="projectid" name="项目编号" value="${item.projectid}" underline="true" readonly="true"/>
+			            <#input id="xmyy" name="项目用药" value="${item.xmyy}" underline="true"/>
+						<div class="form-group">
+                            <label class="col-sm-3 control-label">截止时间</label>
+                            <div class="col-sm-9">
+                                <input class="laydate-icon form-control layer-date" value="${item.jzsj}" id="jzsj" name="jzsj"/>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
                 </div>
-            </div>
+            </div>			
 
+			<div class="row">
+                <div class="form-group">
+					<div class="col-sm-6 b-r" style="text-align:right">
+                     	<div id="imagePicker">
+                         	<i class="fa fa-upload"></i>&nbsp&nbsp缩略图<br/>
+                         	<span>
+                         		建议尺寸：80 * 80<br/>
+                         		或比例：1 : 1
+                         	</span>
+                     	</div>
+                 	</div>
+                 	<div class="col-sm-6">
+               			<img class="img-responsive" id="imgview" src="${item.sltPath}"/>
+               		</div>
+               </div>
+               <div class="hr-line-dashed"></div>
+               <div class="form-group">
+               		<div class="col-sm-1"><input type="hidden" id="xmjsContent" value="${item.xmjs}"/></div>
+                    <div class="col-sm-5 b-r">
+                    	<b>项目介绍</b>
+                    	<div id="xmjs" class="summernote"></div>
+                    </div>
+                    <div class="col-sm-5">
+                    	<b>参加标准</b>
+                    	<div id="cjbz" class="summernote"></div>
+                    </div>
+                    <div class="col-sm-1"><input type="hidden" id="cjbzContent" value="${item.cjbz}"/></div>
+               </div>
+               <div class="hr-line-dashed"></div>
+			</div>
+			
+			
             <div class="row btn-group-m-t">
                 <div class="col-sm-10">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ProjectInfoDlg.editSubmit()"/>
                     <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ProjectInfoDlg.close()"/>
                 </div>
             </div>
+            
         </div>
 
     </div>
 </div>
-<script src="${ctxPath}/static/modular/custom/project/project_info.js"></script>
+<script src="${ctxPath}/static/js/plugins/switchery/switchery.js"></script>
+<script src="${ctxPath}/static/js/plugins/summernote/summernote.js"></script>
+<script src="${ctxPath}/static/js/plugins/summernote/summernote-zh-CN.js"></script>
+<script src="${ctxPath}/static/modular/custom/project/project_edit.js"></script>
 @}

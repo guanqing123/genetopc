@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.annotion.Permission;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.core.common.exception.FileUploadException;
 import com.stylefeng.guns.core.domain.FilePath;
 import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.log.LogObjectHolder;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.OssUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.custom.model.Project;
+import com.stylefeng.guns.modular.custom.model.ProjectCity;
 import com.stylefeng.guns.modular.custom.service.IProjectService;
 
 /**
@@ -70,20 +71,61 @@ public class ProjectController extends BaseController {
     public String projectUpdate(@PathVariable Integer projectId, Model model) {
         Project project = projectService.selectById(projectId);
         model.addAttribute("item",project);
-        LogObjectHolder.me().set(project);
         return PREFIX + "project_edit.html";
+    }
+    
+    /**
+     * 跳转项目医院
+     */
+    @RequestMapping("/project_hospital/{projectId}")
+    public String projectHospital(@PathVariable Integer projectId, Model model) {
+    	model.addAttribute("projectid", projectId);
+    	return PREFIX + "project_hospital.html";
+    }
+    
+    /**
+     * 跳转添加城市页面
+     * @return
+     */
+    @RequestMapping("/project_cityadd/{projectId}")
+    public String projectCityAdd(@PathVariable Integer projectId, Model model) {
+    	model.addAttribute("projectid", projectId);
+    	return PREFIX + "project_cityadd.html";
+    }
+    
+    /**
+     * 跳转到修改焦点图
+     */
+    @RequestMapping("/project_focus/{projectId}")
+    public String projectFocus(@PathVariable Integer projectId, Model model) {
+    	Project project = projectService.selectById(projectId);
+    	model.addAttribute("item", project);
+    	return PREFIX + "project_focus.html";
     }
 
     /**
      * 获取项目列表列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
+    public Object list(String condition, String jd) {
         Page<Project> page = new PageFactory<Project>().defaultPage();
-        List<Project> list = projectService.getProjectListByCondition(page, condition);
+        List<Project> list = projectService.getProjectListByCondition(page, condition, jd);
         page.setRecords(list);
         return super.packForBT(page);
+    }
+    
+    /**
+     * 获取城市列表
+     * @param projectid
+     * @return
+     */
+    @RequestMapping(value = "/cityList")
+    @ResponseBody
+    public Object cityList(String projectid) {
+    	List<ProjectCity> result = projectService.getCityListByProjectid(projectid);
+    	return result;
     }
 
     /**
@@ -132,6 +174,10 @@ public class ProjectController extends BaseController {
     	return SUCCESS_TIP;
     }
     
+    /**
+     * 保存图片到本地
+     * @param base64Data
+     */
 	@SuppressWarnings("unused")
 	private void saveFileToLocal(String base64Data) {
     	String dataPrix = "";
@@ -174,16 +220,19 @@ public class ProjectController extends BaseController {
 			throw new GunsException(BizExceptionEnum.FILE_WRITE_ERROR);
 		}
     }
-
-    /**
-     * 删除项目列表
-     */
-    @RequestMapping(value = "/delete")
-    @ResponseBody
-    public Object delete(@RequestParam Integer projectId) {
-        projectService.deleteById(projectId);
-        return SUCCESS_TIP;
-    }
+	
+	/**
+	 * 修改项目状态
+	 * @param projectid
+	 * @param state
+	 * @return
+	 */
+	@RequestMapping(value = "/modifyState")
+	@ResponseBody
+	public Object modifyState(@RequestParam Integer projectid, @RequestParam Integer state) {
+		projectService.modifyState(projectid, state);
+		return SUCCESS_TIP;
+	}
 
     /**
      * 修改项目列表
@@ -191,7 +240,109 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update(Project project) {
-        projectService.updateById(project);
+    	// 修改图片
+    	if (ToolUtil.contains(project.getBase64Data(), "base64")) {
+    		// 获取原先项目的缩略图
+    		Project oldProject = projectService.selectById(project.getProjectid());
+    		String dataPrix = "";
+    		String data = "";
+    		String[] d = project.getBase64Data().split("base64,");
+    		if (d != null && d.length == 2) {
+    			dataPrix = d[0];
+    			data = d[1];
+    		} else {
+    			throw new GunsException(BizExceptionEnum.FILE_WRONGFUL_ERROR);
+    		}
+    		String suffix = "";
+        	if ("data:image/jpeg;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".jpg";
+        	} else if ("data:image/x-icon;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".ico";
+        	} else if ("data:image/gif;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".gif";
+        	} else if ("data:image/png;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".png";
+        	} else {
+        		throw new GunsException(BizExceptionEnum.FILE_FORMAT_ERROR);
+        	}    	
+        	// 因为BASE64Decoder的jar问题，此处使用spring框架提供的工具包
+        	byte[] bs = Base64Utils.decodeFromString(data);
+        	FilePath path = ossUtil.transferTo(bs, suffix);
+        	try {
+    			project.setSltKey(path.getFileKey());
+    			project.setSltPath(path.getFileRealPath());
+    			projectService.updateById(project);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			throw new FileUploadException(500, e.getMessage(), path);
+    		}
+        	ossUtil.deleteObject(oldProject.getSltKey());
+        	return SUCCESS_TIP;
+    	} else {
+    		projectService.updateById(project);
+    		return SUCCESS_TIP;
+    	}
+    }
+    
+    /**
+     * 设置焦点图
+     * @return
+     */
+    @RequestMapping(value = "/focus")
+    @ResponseBody
+    public Object focus(Project project) {
+    	// 替换焦点图
+    	if (project.getJd() == 1 && ToolUtil.contains(project.getBase64Data(), "base64")) {
+    		// 获取原先项目的缩略图
+    		Project oldProject = projectService.selectById(project.getProjectid());
+    		String dataPrix = "";
+    		String data = "";
+    		String[] d = project.getBase64Data().split("base64,");
+    		if (d != null && d.length == 2) {
+    			dataPrix = d[0];
+    			data = d[1];
+    		} else {
+    			throw new GunsException(BizExceptionEnum.FILE_WRONGFUL_ERROR);
+    		}
+    		String suffix = "";
+        	if ("data:image/jpeg;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".jpg";
+        	} else if ("data:image/x-icon;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".ico";
+        	} else if ("data:image/gif;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".gif";
+        	} else if ("data:image/png;".equalsIgnoreCase(dataPrix)) {
+        		suffix = ".png";
+        	} else {
+        		throw new GunsException(BizExceptionEnum.FILE_FORMAT_ERROR);
+        	}    	
+        	// 因为BASE64Decoder的jar问题，此处使用spring框架提供的工具包
+        	byte[] bs = Base64Utils.decodeFromString(data);
+        	FilePath path = ossUtil.transferTo(bs, suffix);
+        	try {
+    			project.setJdtKey(path.getFileKey());
+    			project.setJdtPath(path.getFileRealPath());
+    			projectService.updateById(project);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			throw new FileUploadException(500, e.getMessage(), path);
+    		}
+        	if (ToolUtil.isNotEmpty(oldProject.getJdtKey()))
+        		ossUtil.deleteObject(oldProject.getJdtKey());
+        	return SUCCESS_TIP;
+    	} else {
+    		projectService.updateById(project);
+    		return SUCCESS_TIP;
+    	}
+    }
+    
+    /**
+     * 删除项目列表
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public Object delete(@RequestParam Integer projectId) {
+        projectService.deleteById(projectId);
         return SUCCESS_TIP;
     }
 

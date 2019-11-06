@@ -42,16 +42,16 @@ Project.initColumn = function () {
             {
             	title: '项目状态', field: 'state', visible: true, align: 'center', valign: 'middle',
             	formatter: function(value, row, index) {
-            		return '<div class="active"><input type="checkbox" id="act_' + row.projectid + '" class="js-switch" /></div>'
+            		return '<div class="state"><input type="checkbox" id="sta_' + row.projectid + '" class="js-switch" /></div>'
             	},
-            	events: 'operatActive'
+            	events: 'operatState'
             },
             {title: '截止时间', field: 'jzsj', visible: true, align: 'center', valign: 'middle'},
             {
             	title: '焦点', field: 'jd', visible: true, align: 'center', valign: 'middle',
             	formatter: function (value, row, index) {
             		if (row.jd === 1) {
-            			return '是'
+            			return '是  [ order : '+row.jdOrder+' ] '
             		} else {
             			return '否'
             		}
@@ -59,6 +59,46 @@ Project.initColumn = function () {
             }
     ];
 };
+
+/**
+ * events操作
+ * 是否启用
+ */
+window.operatState = {
+	'click .state': function (e, value, row, index) {
+		staRes = {};
+		
+        function set(key, val) {
+        	staRes[key] = val;
+        }
+        
+        set('state', Project.ick(row.projectid));
+        set('projectid', row.projectid);
+        
+        var ajax = new $ax(Feng.ctxPath + "/project/modifyState", function (data) {
+			Feng.success("修改成功!");
+		}, function (data) {
+			Feng.error("修改失败!" + data.responseJSON.message + "!");
+			Project.table.refresh();
+		});
+        ajax.set(staRes);
+        ajax.start();
+	}
+}
+
+/**
+ * switchery状态
+ */
+Project.ick = function (projectid) {
+    var isChecked = $("#sta_" + projectid + "").get(0).checked;
+    var state;
+    if (isChecked) {
+        state = 1;
+    }
+    else state = 0;
+    return state;
+};
+
 
 /**
  * 检查是否选中
@@ -80,7 +120,7 @@ Project.check = function () {
 Project.openAddProject = function () {
     var index = layer.open({
         type: 2,
-        title: '添加项目列表',
+        title: '添加项目',
         area: ['800px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
@@ -97,15 +137,52 @@ Project.openProjectDetail = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '项目列表详情',
+            title: '项目详情',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/project/project_update/' + Project.seItem.id
+            content: Feng.ctxPath + '/project/project_update/' + Project.seItem.projectid
         });
         this.layerIndex = index;
+        layer.full(index)
     }
 };
+
+/**
+ * 打开项目医院
+ */
+Project.openProjectHospital = function() {
+	if (this.check()) {
+        var index = layer.open({
+            type: 2,
+            title: '开展医院',
+            area: ['800px', '420px'], //宽高
+            fix: false, //不固定
+            maxmin: false,
+            content: Feng.ctxPath + '/project/project_hospital/' + Project.seItem.projectid
+        });
+        this.layerIndex = index;
+        layer.full(index)
+	}
+}
+
+/**
+ * 打开焦点图设置页面
+ */
+Project.openProjectFocus = function() {
+	if (this.check()){
+		var index = layer.open({
+			type: 2,
+			title: '焦点图设置',
+			area: ['800px', '420px'], //宽高
+			fix: false, //不固定
+			maxmin: true,
+			content: Feng.ctxPath + '/project/project_focus/' + Project.seItem.projectid
+		});
+		this.layerIndex = index;
+		layer.full(index)
+	}
+}
 
 /**
  * 删除项目列表
@@ -129,6 +206,7 @@ Project.delete = function () {
 Project.search = function () {
     var queryData = {};
     queryData['condition'] = $("#condition").val();
+    queryData['jd']=$("input[type='radio'][name='jd']:checked").val();
     Project.table.refresh({query: queryData});
 };
 
@@ -136,7 +214,7 @@ $(function () {
     var defaultColunms = Project.initColumn();
     var table = new BSTable(Project.id, "/project/list", defaultColunms, function(data) {
     	$.each(data.rows, function (i, v) {
-            var acSwitch = new Switchery(document.getElementById('act_' + v.projectid), {color: '#1AB394', size: 'small' });
+            var acSwitch = new Switchery(document.getElementById('sta_' + v.projectid), {color: '#1AB394', size: 'small' });
             if (v.state === 1) {
             	Project.setSwitchery(acSwitch, true);
             }

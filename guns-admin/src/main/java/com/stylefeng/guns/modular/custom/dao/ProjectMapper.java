@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 public interface ProjectMapper extends BaseMapper<Project> {
 
-	List<Project> getProjectListByCondition(Page<Project> page,@Param("condition") String condition);
+	List<Project> getProjectListByCondition(Page<Project> page,@Param("condition") String condition,@Param("jd") String jd);
 
+	void modifyState(@Param("projectid") Integer projectid,@Param("state") Integer state);
 }
