@@ -20,4 +20,6 @@ public interface ProjectCityMapper extends BaseMapper<ProjectCity> {
 
 	List<ProjectCity> getCityListByProjectid(@Param("projectid") String projectid);
 
+	void cityModify(@Param("pk") Integer pk,@Param("name") String name,@Param("value") String value);
+
 }

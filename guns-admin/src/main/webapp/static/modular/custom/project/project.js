@@ -30,7 +30,7 @@ Project.initColumn = function () {
                     var h;
                     if (row.sltPath != null) {
                         var url = row.sltPath;
-                        h = '<div style="height: 30px;overflow: hidden"><img style="width:30px" src="' + url + '" /></a></div>'
+                        h = '<div style="height: 30px;overflow: hidden"><img onmouseover = "Project.showLargeImg(event, this)" onmouseout = "Project.hideLargeImg()" style="width:30px" src="' + url + '" /></a></div>'
                     }
                     return h;
                 }
@@ -59,6 +59,36 @@ Project.initColumn = function () {
             }
     ];
 };
+
+// 获取鼠标坐标
+Project.mousePosition = function(ev) {
+    ev = ev || window.event;
+    if(ev.pageX || ev.pageY){ 
+        return {x:ev.pageX, y:ev.pageY}; 
+    } 
+    return { 
+        x:ev.clientX + document.body.scrollLeft - document.body.clientLeft, 
+        y:ev.clientY + document.body.scrollTop - document.body.clientTop
+    }; 
+}
+
+// 显示大图
+Project.showLargeImg = function(e, t) {
+	var mousePos = this.mousePosition(e);
+    var  xOffset = 30;
+    var  yOffset = 30;
+    $("#tooltip").css("display","block")
+    	.css("position","absolute").css("top",(mousePos.y - 90) + "px")
+    		.css("left",(mousePos.x) + "px").css("z-index","100")
+    		.css("width", "160px").css("height", "160px")
+    		.attr("src", $(t).attr("src"));
+}
+
+// 隐藏
+Project.hideLargeImg = function () {
+	$("#tooltip").attr("src","");
+	$("#tooltip").css("display","none");
+}
 
 /**
  * events操作

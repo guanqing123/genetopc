@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.custom.service;
 
 import com.stylefeng.guns.modular.custom.model.Project;
 import com.stylefeng.guns.modular.custom.model.ProjectCity;
+import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
 
 import java.util.List;
 
@@ -23,4 +24,16 @@ public interface IProjectService extends IService<Project> {
 	void modifyState(Integer projectid, Integer state);
 
 	List<ProjectCity> getCityListByProjectid(String projectid);
+
+	void cityAdd(ProjectCity projectCity);
+
+	void cityModify(Integer pk, String name, String value);
+
+	List<ProjectCityHospital> getHospitalListByCityid(Integer projectid, Integer cityid);
+
+	void hospitalAdd(ProjectCityHospital cityHospital);
+
+	void hospitalModify(Integer pk, String name, String value);
+
+	ProjectCity selectCityById(Integer cityId);
 }

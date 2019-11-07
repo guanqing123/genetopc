@@ -1,4 +1,5 @@
 @layout("/common/_container.html"){
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
@@ -6,19 +7,33 @@
         	<input type="hidden" id="projectid" value="${projectid}">
         
             <div class="row">
+            
                 <div class="col-sm-6 b-r">
                		<div class="hidden-xs" id="ProjectCityTableToolbar" role="group">
-                       <#button name="添加" icon="fa-plus" clickFun="ProjectCityDlg.openAddCity(${projectid})"/>
+                       <#button name="添加城市" icon="fa-plus" clickFun="ProjectCityDlg.openAddCity(${projectid})"/>
+                       <#button name="删除城市" icon="fa-trash" btnCss="danger" clickFun="ProjectCityDlg.deleteCity()" space="true"/>
                     </div>
                     <#table id="ProjectCityTable"/>
                 </div>
+                
                 <div class="col-sm-6">
-					<#table id="ProjectCityHospitalTable"/>
-                </div>
-            </div>			
-           
-        </div>
+                	<div class="row hidden-xs" id="ProjectCityHospitalTableToolbar" role="group">
+    					<div class="col-sm-6">
+    						<input type="hidden" id="cityid" value="">
+	    					<input type="text" class="form-control" id="cityName" placeholder="所有医院" readonly="true">
+    					</div>
+    					<div class="col-sm-6">
+	                		<#button name="添加医院" icon="fa-plus" clickFun="ProjectCityHospitalDlg.openAddHospital()"/>
+                		</div>
+                	</div>
+                	<#table id="ProjectCityHospitalTable"/>
+            	</div>
+            	
+        	</div>
+        	
+    	</div>
     </div>
 </div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="${ctxPath}/static/modular/custom/project/project_hospital.js"></script>
 @}

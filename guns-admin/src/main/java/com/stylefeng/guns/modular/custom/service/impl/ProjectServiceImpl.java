@@ -2,6 +2,8 @@ package com.stylefeng.guns.modular.custom.service.impl;
 
 import com.stylefeng.guns.modular.custom.model.Project;
 import com.stylefeng.guns.modular.custom.model.ProjectCity;
+import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
+import com.stylefeng.guns.modular.custom.dao.ProjectCityHospitalMapper;
 import com.stylefeng.guns.modular.custom.dao.ProjectCityMapper;
 import com.stylefeng.guns.modular.custom.dao.ProjectMapper;
 import com.stylefeng.guns.modular.custom.service.IProjectService;
@@ -27,6 +29,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 	@Autowired
 	private ProjectCityMapper projectCityMapper;
 	
+	@Autowired
+	private ProjectCityHospitalMapper projectCityHospitalMapper;
+	
 	@Override
 	public List<Project> getProjectListByCondition(Page<Project> page, String condition, String jd) {
 		// TODO Auto-generated method stub
@@ -43,5 +48,41 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 	public List<ProjectCity> getCityListByProjectid(String projectid) {
 		// TODO Auto-generated method stub
 		return this.projectCityMapper.getCityListByProjectid(projectid);
+	}
+
+	@Override
+	public void cityAdd(ProjectCity projectCity) {
+		// TODO Auto-generated method stub
+		this.projectCityMapper.insert(projectCity);
+	}
+
+	@Override
+	public void cityModify(Integer pk, String name, String value) {
+		// TODO Auto-generated method stub
+		this.projectCityMapper.cityModify(pk, name, value);
+	}
+
+	@Override
+	public List<ProjectCityHospital> getHospitalListByCityid(Integer projectid, Integer cityid) {
+		// TODO Auto-generated method stub
+		return this.projectCityHospitalMapper.getHospitalListByCityid(projectid, cityid);
+	}
+
+	@Override
+	public void hospitalAdd(ProjectCityHospital cityHospital) {
+		// TODO Auto-generated method stub
+		this.projectCityHospitalMapper.insert(cityHospital);
+	}
+
+	@Override
+	public void hospitalModify(Integer pk, String name, String value) {
+		// TODO Auto-generated method stub
+		this.projectCityHospitalMapper.hospitalModify(pk, name, value);
+	}
+
+	@Override
+	public ProjectCity selectCityById(Integer cityId) {
+		// TODO Auto-generated method stub
+		return this.projectCityMapper.selectById(cityId);
 	}
 }

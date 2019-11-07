@@ -19,5 +19,9 @@
     <select id="getCityListByProjectid" resultMap="BaseResultMap">
     	select * from gene_project_city where projectid = #{projectid} order by cityid desc
     </select>
+    
+    <update id="cityModify">
+    	update gene_project_city set ${name} = #{value} where cityid = #{pk}
+    </update>
 
 </mapper>

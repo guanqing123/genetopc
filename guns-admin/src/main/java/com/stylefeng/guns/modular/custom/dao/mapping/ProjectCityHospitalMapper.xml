@@ -15,5 +15,17 @@
     <sql id="Base_Column_List">
         hospitalid, cityid, projectid, hospital_name AS hospitalName, department_name AS departmentName
     </sql>
+    
+    <select id="getHospitalListByCityid" resultMap="BaseResultMap">
+    	select * from gene_project_city_hospital where projectid = #{projectid}
+    	<if test="null!=cityid and cityid!=0">
+    		and cityid = #{cityid}
+    	</if>
+    	order by hospitalid desc
+    </select>
+    
+    <update id="hospitalModify">
+    	update gene_project_city_hospital set ${name} = #{value} where hospitalid = #{pk}
+    </update>
 
 </mapper>

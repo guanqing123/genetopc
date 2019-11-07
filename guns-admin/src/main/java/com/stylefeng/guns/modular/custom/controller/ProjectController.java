@@ -28,12 +28,13 @@ import com.stylefeng.guns.core.util.OssUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.custom.model.Project;
 import com.stylefeng.guns.modular.custom.model.ProjectCity;
+import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
 import com.stylefeng.guns.modular.custom.service.IProjectService;
 
 /**
  * 项目列表控制器
  *
- * @author fengshuonan
+ * @author guanqing
  * @Date 2019-11-04 13:26:39
  */
 @Controller
@@ -89,8 +90,20 @@ public class ProjectController extends BaseController {
      */
     @RequestMapping("/project_cityadd/{projectId}")
     public String projectCityAdd(@PathVariable Integer projectId, Model model) {
-    	model.addAttribute("projectid", projectId);
+    	Project project = projectService.selectById(projectId);
+    	model.addAttribute("item", project);
     	return PREFIX + "project_cityadd.html";
+    }
+    
+    /**
+     * 跳转添加医院页面
+     * @return
+     */
+    @RequestMapping("/project_hospitaladd/{cityId}")
+    public String projectHospitalAdd(@PathVariable Integer cityId, Model model) {
+    	ProjectCity city = projectService.selectCityById(cityId);
+    	model.addAttribute("item", city);
+    	return PREFIX + "project_hospitaladd.html";
     }
     
     /**
@@ -126,6 +139,60 @@ public class ProjectController extends BaseController {
     public Object cityList(String projectid) {
     	List<ProjectCity> result = projectService.getCityListByProjectid(projectid);
     	return result;
+    }
+    
+    /**
+     * 获取医院列表
+     * @param cityid
+     * @return
+     */
+    @RequestMapping(value = "/hospitalList")
+    @ResponseBody
+    public Object hospitalList(Integer projectid,Integer cityid) {
+    	List<ProjectCityHospital> result = projectService.getHospitalListByCityid(projectid, cityid);
+    	return result;
+    }
+    
+    /**
+     * 新增医院
+     * @param cityHospital
+     * @return
+     */
+    @RequestMapping(value = "/hospitalAdd")
+    @ResponseBody
+    public Object hospitalAdd(ProjectCityHospital cityHospital) {
+    	projectService.hospitalAdd(cityHospital);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 修改医院
+     */
+    @RequestMapping(value = "/hospitalModify")
+    @ResponseBody
+    public Object hospitalModify(@RequestParam Integer pk, @RequestParam String name, @RequestParam String value) {
+    	projectService.hospitalModify(pk, name, value);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 新增城市
+     */
+    @RequestMapping(value = "/cityAdd")
+    @ResponseBody
+    public Object cityAdd(ProjectCity projectCity) {
+    	projectService.cityAdd(projectCity);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 修改城市
+     */
+    @RequestMapping(value = "/cityModify")
+    @ResponseBody
+    public Object cityModify(@RequestParam Integer pk, @RequestParam String name, @RequestParam String value) {
+    	projectService.cityModify(pk, name, value);
+    	return SUCCESS_TIP;
     }
 
     /**

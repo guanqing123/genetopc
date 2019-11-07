@@ -1,0 +1,32 @@
+@layout("/common/_container.html"){
+<style>
+</style>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="projectCityHospitalForm">
+        	
+        	<input type="hidden" id="projectid" value="${item.projectid}"/>
+        	<input type="hidden" id="cityid" value="${item.cityid}"/>
+			        	
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="hospitalName" name="医院名称" underline="true"/>
+                </div>
+                <div class="col-sm-6">
+                	<#input id="departmentName" name="科室" underline="true"/>
+                </div>
+            </div>
+			
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ProjectCityHospitalDlg.hospitalSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ProjectCityHospitalDlg.close()"/>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/custom/project/project_city_hospital.js"></script>
+@}
