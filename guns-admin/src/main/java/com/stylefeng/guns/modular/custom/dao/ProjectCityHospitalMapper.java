@@ -22,4 +22,6 @@ public interface ProjectCityHospitalMapper extends BaseMapper<ProjectCityHospita
 
 	void hospitalModify(@Param("pk") Integer pk,@Param("name") String name,@Param("value") String value);
 
+	void deleteByCityid(@Param("cityid") Integer cityid);
+
 }

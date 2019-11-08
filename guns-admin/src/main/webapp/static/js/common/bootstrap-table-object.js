@@ -19,6 +19,7 @@
         this.data = {};
         this.queryParams = {}; // 向后台传递的自定义参数
         this.callback = callback;
+        this.check = null;
     };
 
     BSTable.prototype = {
@@ -70,7 +71,12 @@
                     onLoadSuccess: function(data) {
                     	if (typeof this.callback === 'function')
                     		this.callback(data)
-                    }
+                    },
+					check: this.check,
+					onCheck: function(row) {
+						if (typeof this.check === 'function')
+							this.check(row);
+					}
                 });
             return this;
         },
@@ -86,6 +92,12 @@
          */
         setPagination: function (pagination) {
 			this.pagination = pagination;
+		},
+		/**
+		 * 单击行回调
+		 */
+		onCheck: function(check) {
+			this.check = check;
 		},
         /**
          * 设置分页方式：server 或者 client

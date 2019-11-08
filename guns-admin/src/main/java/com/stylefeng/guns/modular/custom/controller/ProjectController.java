@@ -20,8 +20,8 @@ import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.annotion.Permission;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
-import com.stylefeng.guns.core.common.exception.FileUploadException;
 import com.stylefeng.guns.core.domain.FilePath;
+import com.stylefeng.guns.core.exception.FileUploadException;
 import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.OssUtil;
@@ -176,6 +176,17 @@ public class ProjectController extends BaseController {
     }
     
     /**
+     * 删除医院
+     * @return
+     */
+    @RequestMapping(value = "/hospitalDelete")
+    @ResponseBody
+    public Object hospitalDelete(@RequestParam Integer hospitalid) {
+    	projectService.hospitalDelete(hospitalid);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
      * 新增城市
      */
     @RequestMapping(value = "/cityAdd")
@@ -192,6 +203,16 @@ public class ProjectController extends BaseController {
     @ResponseBody
     public Object cityModify(@RequestParam Integer pk, @RequestParam String name, @RequestParam String value) {
     	projectService.cityModify(pk, name, value);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 删除城市
+     */
+    @RequestMapping(value = "/cityDelete")
+    @ResponseBody
+    public Object cityDelete(@RequestParam Integer cityid) {
+    	projectService.cityDelete(cityid);
     	return SUCCESS_TIP;
     }
 

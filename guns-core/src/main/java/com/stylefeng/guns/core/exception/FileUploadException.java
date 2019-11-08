@@ -1,4 +1,4 @@
-package com.stylefeng.guns.core.common.exception;
+package com.stylefeng.guns.core.exception;
 
 import java.util.Arrays;
 import java.util.List;

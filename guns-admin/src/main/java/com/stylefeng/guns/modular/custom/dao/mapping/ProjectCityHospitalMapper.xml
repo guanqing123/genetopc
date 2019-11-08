@@ -21,11 +21,15 @@
     	<if test="null!=cityid and cityid!=0">
     		and cityid = #{cityid}
     	</if>
-    	order by hospitalid desc
+    	order by cityid desc
     </select>
     
     <update id="hospitalModify">
     	update gene_project_city_hospital set ${name} = #{value} where hospitalid = #{pk}
     </update>
+    
+    <delete id="deleteByCityid">
+    	delete from gene_project_city_hospital where cityid = #{cityid}
+    </delete>
 
 </mapper>

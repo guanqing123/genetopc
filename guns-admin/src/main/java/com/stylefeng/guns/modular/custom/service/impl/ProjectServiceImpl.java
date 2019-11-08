@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -84,5 +85,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 	public ProjectCity selectCityById(Integer cityId) {
 		// TODO Auto-generated method stub
 		return this.projectCityMapper.selectById(cityId);
+	}
+
+	@Override
+	public void hospitalDelete(Integer hospitalid) {
+		// TODO Auto-generated method stub
+		this.projectCityHospitalMapper.deleteById(hospitalid);
+	}
+
+	@Transactional
+	@Override
+	public void cityDelete(Integer cityid) {
+		// TODO Auto-generated method stub
+		this.projectCityMapper.deleteById(cityid);
+		this.projectCityHospitalMapper.deleteByCityid(cityid);
 	}
 }

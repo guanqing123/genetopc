@@ -31,7 +31,6 @@ public enum BizExceptionEnum implements ServiceExceptionEnum{
 	FILE_WRONGFUL_ERROR(400, "图片数据不合法"),
 	FILE_FORMAT_ERROR(400, "图片格式不合法"),
 	FILE_WRITE_ERROR(400, "图片写入失败"),
-	FILE_OSS_ERROR(400, "图片上传阿里云出错"),
 
 	/**
 	 * 权限和数据问题

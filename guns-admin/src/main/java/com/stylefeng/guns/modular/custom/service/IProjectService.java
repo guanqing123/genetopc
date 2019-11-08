@@ -36,4 +36,8 @@ public interface IProjectService extends IService<Project> {
 	void hospitalModify(Integer pk, String name, String value);
 
 	ProjectCity selectCityById(Integer cityId);
+
+	void hospitalDelete(Integer hospitalid);
+
+	void cityDelete(Integer cityid);
 }

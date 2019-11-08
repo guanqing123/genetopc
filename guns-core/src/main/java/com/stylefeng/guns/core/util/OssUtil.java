@@ -1,6 +1,5 @@
 package com.stylefeng.guns.core.util;
 
-
 import java.io.ByteArrayInputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -14,10 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
-import com.stylefeng.guns.config.properties.AliyunProperties;
-import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
-import com.stylefeng.guns.core.common.exception.FileUploadException;
+import com.stylefeng.guns.core.config.properties.AliyunProperties;
 import com.stylefeng.guns.core.domain.FilePath;
+import com.stylefeng.guns.core.enums.CommonExceptionEnum;
+import com.stylefeng.guns.core.exception.FileUploadException;
+
 import jodd.datetime.JDateTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,7 +67,7 @@ public class OssUtil {
             path.setFileRealPath(filePath.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(BizExceptionEnum.FILE_OSS_ERROR, path);
+            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, path);
         } finally {
             ossClient.shutdown();
         }
@@ -106,7 +106,7 @@ public class OssUtil {
             path.setFileSize(file.getSize());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(BizExceptionEnum.FILE_OSS_ERROR, path);
+            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, path);
         } finally {
             ossClient.shutdown();
         }
@@ -161,7 +161,7 @@ public class OssUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(BizExceptionEnum.FILE_OSS_ERROR, paths);
+            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, paths);
         } finally {
             ossClient.shutdown();
         }
@@ -207,7 +207,7 @@ public class OssUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(BizExceptionEnum.FILE_OSS_ERROR, paths);
+            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, paths);
         } finally {
             ossClient.shutdown();
         }
