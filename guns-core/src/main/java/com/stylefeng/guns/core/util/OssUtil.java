@@ -15,7 +15,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.stylefeng.guns.core.config.properties.AliyunProperties;
 import com.stylefeng.guns.core.domain.FilePath;
-import com.stylefeng.guns.core.enums.CommonExceptionEnum;
+import com.stylefeng.guns.core.enums.GunsExceptionEnum;
 import com.stylefeng.guns.core.exception.FileUploadException;
 
 import jodd.datetime.JDateTime;
@@ -67,7 +67,7 @@ public class OssUtil {
             path.setFileRealPath(filePath.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, path);
+            throw new FileUploadException(GunsExceptionEnum.FILE_OSS_ERROR, path);
         } finally {
             ossClient.shutdown();
         }
@@ -106,7 +106,7 @@ public class OssUtil {
             path.setFileSize(file.getSize());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, path);
+            throw new FileUploadException(GunsExceptionEnum.FILE_OSS_ERROR, path);
         } finally {
             ossClient.shutdown();
         }
@@ -161,7 +161,7 @@ public class OssUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, paths);
+            throw new FileUploadException(GunsExceptionEnum.FILE_OSS_ERROR, paths);
         } finally {
             ossClient.shutdown();
         }
@@ -207,7 +207,7 @@ public class OssUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FileUploadException(CommonExceptionEnum.FILE_OSS_ERROR, paths);
+            throw new FileUploadException(GunsExceptionEnum.FILE_OSS_ERROR, paths);
         } finally {
             ossClient.shutdown();
         }

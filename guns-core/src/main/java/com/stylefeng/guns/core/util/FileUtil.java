@@ -1,7 +1,8 @@
 package com.stylefeng.guns.core.util;
 
+import com.stylefeng.guns.core.enums.GunsExceptionEnum;
 import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.exception.GunsExceptionEnum;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

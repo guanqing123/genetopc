@@ -1,6 +1,6 @@
 package com.stylefeng.guns.core.base.tips;
 
-import com.stylefeng.guns.core.exception.ServiceExceptionEnum;
+import com.stylefeng.guns.core.enums.ServiceExceptionEnum;
 
 /**
  * 返回给前台的错误提示

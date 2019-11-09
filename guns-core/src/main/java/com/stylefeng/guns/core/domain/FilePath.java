@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Created by GQ
+ * created by guanqing
  * 2018年2月2日 上午10:36:57
  */
 @Data

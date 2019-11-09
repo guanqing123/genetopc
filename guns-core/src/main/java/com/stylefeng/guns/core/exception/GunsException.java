@@ -1,5 +1,7 @@
 package com.stylefeng.guns.core.exception;
 
+import com.stylefeng.guns.core.enums.ServiceExceptionEnum;
+
 /**
  * 封装guns的异常
  *

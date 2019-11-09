@@ -1,4 +1,4 @@
-package com.stylefeng.guns.core.exception;
+package com.stylefeng.guns.core.enums;
 
 /**
  * Guns异常枚举
@@ -18,12 +18,18 @@ public enum GunsExceptionEnum implements ServiceExceptionEnum{
 	 */
 	FILE_READING_ERROR(400,"FILE_READING_ERROR!"),
 	FILE_NOT_FOUND(400,"FILE_NOT_FOUND!"),
+	FILE_OSS_ERROR(400, "图片上传阿里云出错"),
 
 	/**
 	 * 错误的请求
 	 */
 	REQUEST_NULL(400, "请求有错误"),
-	SERVER_ERROR(500, "服务器异常");
+	SERVER_ERROR(500, "服务器异常"),
+	
+	/**
+	 * 成功
+	 */
+	REQUEST_SUCCESS(200, "请求成功");
 
 	GunsExceptionEnum(int code, String message) {
 		this.code = code;

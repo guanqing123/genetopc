@@ -1,4 +1,4 @@
-package com.stylefeng.guns.core.exception;
+package com.stylefeng.guns.core.enums;
 
 /**
  * 抽象接口

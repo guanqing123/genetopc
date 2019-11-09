@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.exception.ServiceExceptionEnum;
 import com.stylefeng.guns.core.domain.FilePath;
+import com.stylefeng.guns.core.enums.ServiceExceptionEnum;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
