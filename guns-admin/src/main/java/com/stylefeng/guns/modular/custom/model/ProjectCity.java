@@ -44,9 +44,13 @@ public class ProjectCity extends Model<ProjectCity> {
      * 联系电话
      */
     private String phone;
+    /**
+     * 创建日期
+     */
+    @TableField("create_date")
+    private String createDate;
 
-
-    public Integer getCityid() {
+	public Integer getCityid() {
         return cityid;
     }
 
@@ -85,6 +89,14 @@ public class ProjectCity extends Model<ProjectCity> {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    
+    public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
     @Override
     protected Serializable pkVal() {
@@ -99,6 +111,7 @@ public class ProjectCity extends Model<ProjectCity> {
         ", cityName=" + cityName +
         ", person=" + person +
         ", phone=" + phone +
+        ", createDate=" + createDate +
         "}";
     }
 }

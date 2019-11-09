@@ -45,9 +45,14 @@ public class ProjectCityHospital extends Model<ProjectCityHospital> {
      */
     @TableField("department_name")
     private String departmentName;
+    
+    /**
+     * 创建日期
+     */
+    @TableField("create_date")
+    private String createDate;
 
-
-    public Integer getHospitalid() {
+	public Integer getHospitalid() {
         return hospitalid;
     }
 
@@ -86,6 +91,14 @@ public class ProjectCityHospital extends Model<ProjectCityHospital> {
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
+    
+    public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
     @Override
     protected Serializable pkVal() {
@@ -100,6 +113,7 @@ public class ProjectCityHospital extends Model<ProjectCityHospital> {
         ", projectid=" + projectid +
         ", hospitalName=" + hospitalName +
         ", departmentName=" + departmentName +
+        ", createDate=" + createDate +
         "}";
     }
 }
