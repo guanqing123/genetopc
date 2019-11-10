@@ -21,4 +21,19 @@
         <result column="create_date" property="createDate" />
     </resultMap>
 
+	<select id="getProjectListByCondition" resultMap="BaseResultMap">
+		select * from gene_project 
+			where state=1 and jzsj >= CURDATE() 
+		<if test="null!=condition and condition!=''">
+			and xmmc like CONCAT('%', #{condition} ,'%')
+		</if>
+		order by projectid DESC
+	</select>
+	
+	<select id="getTopFiveSwiperList" resultType="map">
+		select projectid,jdt_path img,xmmc title,'javascript:' url 
+			from  gene_project 
+		where state=1 and jzsj>=CURDATE() and jd=1 order by jd_order asc LIMIT 5
+	</select>
+
 </mapper>
