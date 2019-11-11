@@ -35,5 +35,48 @@
 			from  gene_project 
 		where state=1 and jzsj>=CURDATE() and jd=1 order by jd_order asc LIMIT 5
 	</select>
+	
+	<resultMap type="com.stylefeng.guns.http.model.Project" id="BaseProjectMap">
+		<id  column="projectid" property="projectid" />
+		<result column="xmmc" property="xmmc" />
+		<result column="syz" property="syz" />
+		<result column="xmyy" property="xmyy" />
+		<result column="state" property="state" />
+		<result column="jzsj" property="jzsj" />
+		<result column="jd" property="jd" />
+		<result column="jd_order" property="jdOrder" />
+		<result column="slt_key" property="sltKey" />
+		<result column="slt_path" property="sltPath" />
+		<result column="jdt_key" property="jdtKey" />
+		<result column="jdt_path" property="jdtPath" />
+		<result column="xmjs" property="xmjs" />
+		<result column="cjbz" property="cjbz" />
+		<result column="create_date" property="createDate" />
+		<!-- 城市 -->
+		<collection property="cities" ofType="com.stylefeng.guns.http.model.ProjectCity">
+			<id column="cityid" property="cityid" />
+			<result column="city_name" property="cityName" />
+			<result column="person" property="person"/>
+			<result column="phone" property="phone" />
+			<result column="create_date" property="createDate" />
+			<!-- 医院 -->
+			<collection property="hospitals" ofType="com.stylefeng.guns.http.model.ProjectCityHospital">
+				<id column="hospitalid" property="hospitalid" />
+				<result column="hospital_name" property="hospitalName" />
+				<result column="department_name" property="departmentName" />
+				<result column="create_date" property="createDate" />
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<select id="getProjectDetail" resultMap="BaseProjectMap">
+		select a.projectid,a.xmmc,a.syz,a.xmyy,a.state,a.jzsj,a.jd,a.jd_order,a.slt_key,a.slt_path,a.jdt_key,a.jdt_path,a.xmjs,a.cjbz,a.create_date,
+					b.cityid,b.city_name,b.person,b.phone,b.create_date,
+					c.hospitalid,c.hospital_name,c.department_name,c.create_date
+			from gene_project a 
+				left join gene_project_city b on a.projectid=b.projectid
+				left join gene_project_city_hospital c on b.cityid = c.cityid
+			where a.projectid = 8;
+	</select>
 
 </mapper>

@@ -1,14 +1,14 @@
 package com.stylefeng.guns.http.model;
 
 import java.io.Serializable;
-
-import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
+import java.util.List;
+
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -90,9 +90,13 @@ public class Project extends Model<Project> {
      */
     @TableField("create_date")
     private Date createDate;
+    /**
+     * 城市数组
+     */
+    @TableField(exist = false)
+    private List<ProjectCity> cities;
 
-
-    public Integer getProjectid() {
+	public Integer getProjectid() {
         return projectid;
     }
 
@@ -211,6 +215,14 @@ public class Project extends Model<Project> {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+    
+    public List<ProjectCity> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<ProjectCity> cities) {
+		this.cities = cities;
+	}
 
     @Override
     protected Serializable pkVal() {

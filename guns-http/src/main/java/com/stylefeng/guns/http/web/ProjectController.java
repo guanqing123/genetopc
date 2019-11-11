@@ -61,5 +61,16 @@ public class ProjectController {
 		page.setRecords(list);
 		return ResultUtil.success(page);
 	}
+
+	@ApiOperation(value = "获取项目详情")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="projectid", value="项目id", required=true, paramType="query", dataType="int", defaultValue="8")
+	})
+	@GetMapping(value = "/projectDetail")
+	@ResponseBody
+	public Result<Object> projectDetail(Integer projectid){
+		Project project = projectServiceImpl.getProjectDetail(projectid);
+		return ResultUtil.success(project);
+	}
 }
 

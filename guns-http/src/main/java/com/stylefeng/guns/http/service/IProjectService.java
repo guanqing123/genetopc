@@ -22,4 +22,5 @@ public interface IProjectService extends IService<Project> {
 
 	List<Map<String, Object>> getTopFiveSwiperList();
 
+	Project getProjectDetail(Integer projectid);
 }

@@ -25,4 +25,6 @@ public interface ProjectMapper extends BaseMapper<Project> {
 	List<Project> getProjectListByCondition(Page<Project> page,@Param("condition") String condition);
 
 	List<Map<String, Object>> getTopFiveSwiperList();
+
+	Project getProjectDetail(Integer projectid);
 }

@@ -34,4 +34,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 		return this.baseMapper.getTopFiveSwiperList();
 	}
 
+	@Override
+	public Project getProjectDetail(Integer projectid) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.getProjectDetail(projectid);
+	}
 }
