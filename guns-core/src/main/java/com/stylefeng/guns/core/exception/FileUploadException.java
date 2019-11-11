@@ -30,6 +30,11 @@ public class FileUploadException extends GunsException {
         this.paths = Arrays.asList(path);
     }
 
+    public FileUploadException(Integer code, String message, List<FilePath> paths) {
+    	super(code, message);
+    	this.paths = paths;
+    }
+    
     public FileUploadException(ServiceExceptionEnum serviceExceptionEnum, List<FilePath> paths) {
         super(serviceExceptionEnum);
         this.paths = paths;

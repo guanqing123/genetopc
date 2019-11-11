@@ -84,6 +84,12 @@
 			<artifactId>aliyun-sdk-oss</artifactId>
 		</dependency>
 		
+		<!-- 阿里云短信接口 -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+        </dependency>
+		
 		<!-- redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
