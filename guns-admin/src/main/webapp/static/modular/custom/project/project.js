@@ -252,4 +252,8 @@ $(function () {
 	});
     table.setPaginationType("server");
     Project.table = table.init();
+    
+    window.onresize = function() {
+    	Project.search();
+    }
 });

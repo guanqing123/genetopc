@@ -76,7 +76,7 @@
 			from gene_project a 
 				left join gene_project_city b on a.projectid=b.projectid
 				left join gene_project_city_hospital c on b.cityid = c.cityid
-			where a.projectid = 8;
+			where a.projectid = #{projectid}
 	</select>
 
 </mapper>
