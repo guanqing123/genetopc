@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -32,12 +33,16 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 	@Autowired
 	private EnrollImageMapper enrollImageMapper;
 	
+	@Transactional
 	@Override
 	public void saveEnroll(Enroll enroll) {
 		// TODO Auto-generated method stub
+		System.out.println("----之前----" + enroll.getFiles().length);
 		List<FilePath> paths = ossUtil.transferTo(enroll.getFiles());
+		System.out.println("----之后----" + enroll);
 		try {
-			this.saveEnroll(enroll);
+			this.insert(enroll);
+			System.out.println("----之后之后----" + enroll);
 			for (FilePath path : paths) {
 				EnrollImage image = new EnrollImage();
 				image.setEnrollid(enroll.getEnrollid());

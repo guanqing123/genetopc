@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.custom.dao.EnrollMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.custom.model.Enroll">
+        <id column="enrollid" property="enrollid" />
+        <result column="projectid" property="projectid" />
+        <result column="xmmc" property="xmmc" />
+        <result column="name" property="name" />
+        <result column="telephone" property="telephone" />
+        <result column="sex" property="sex" />
+        <result column="age" property="age" />
+        <result column="disease" property="disease" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="district" property="district" />
+        <result column="detail_address" property="detailAddress" />
+        <result column="comment" property="comment" />
+        <result column="state" property="state" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        enrollid, projectid, name, telephone, sex, age, disease, province, city, district, detail_address AS detailAddress, comment, state, create_date AS createDate
+    </sql>
+    
+    <select id="listByCondition" resultMap="BaseResultMap">
+    	select a.enrollid, a.projectid, b.xmmc, a.name, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.comment, a.state, a.create_date
+    	 from gene_enroll a 
+    	 inner join gene_project b on a.projectid=b.projectid
+    	 where 1=1
+    	 order by a.create_date desc
+    </select>
+
+</mapper>

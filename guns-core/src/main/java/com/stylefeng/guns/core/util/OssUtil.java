@@ -194,6 +194,7 @@ public class OssUtil {
             for (MultipartFile file : files) {
                 if (file != null && file.getSize() > 0) {
                     key.setLength(0);
+                    System.out.println("file>"+file.getOriginalFilename());
                     key.append(basePath).append(UUID.randomUUID().toString()).append(".").append(FilenameUtils.getExtension(file.getOriginalFilename()));
                     ossClient.putObject(bucketName, key.toString(), file.getInputStream());
                     FilePath path = new FilePath();

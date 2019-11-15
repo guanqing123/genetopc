@@ -1,15 +1,14 @@
-package com.stylefeng.guns.http.model;
+package com.stylefeng.guns.modular.custom.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -17,7 +16,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * </p>
  *
  * @author guanqing123
- * @since 2019-11-11
+ * @since 2019-11-15
  */
 @TableName("gene_enroll")
 public class Enroll extends Model<Enroll> {
@@ -34,6 +33,11 @@ public class Enroll extends Model<Enroll> {
      */
     private Integer projectid;
     /**
+     * 项目名称
+     */
+    @TableField(exist = false)
+    private String  xmmc;
+	/**
      * 姓名
      */
     private String name;
@@ -83,13 +87,9 @@ public class Enroll extends Model<Enroll> {
      */
     @TableField("create_date")
     private Date createDate;
-    /**
-     * 附件
-     */
-    @TableField(exist = false)
-    private MultipartFile[] files;
 
-	public Integer getEnrollid() {
+
+    public Integer getEnrollid() {
         return enrollid;
     }
 
@@ -104,6 +104,14 @@ public class Enroll extends Model<Enroll> {
     public void setProjectid(Integer projectid) {
         this.projectid = projectid;
     }
+    
+    public String getXmmc() {
+		return xmmc;
+	}
+
+	public void setXmmc(String xmmc) {
+		this.xmmc = xmmc;
+	}
 
     public String getName() {
         return name;
@@ -200,14 +208,6 @@ public class Enroll extends Model<Enroll> {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-    
-    public MultipartFile[] getFiles() {
-		return files;
-	}
-
-	public void setFiles(MultipartFile[] files) {
-		this.files = files;
-	}
 
     @Override
     protected Serializable pkVal() {
@@ -219,6 +219,7 @@ public class Enroll extends Model<Enroll> {
         return "Enroll{" +
         "enrollid=" + enrollid +
         ", projectid=" + projectid +
+        ", xmmc=" + xmmc +
         ", name=" + name +
         ", telephone=" + telephone +
         ", sex=" + sex +

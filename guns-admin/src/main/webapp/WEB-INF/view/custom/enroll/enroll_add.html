@@ -1,0 +1,41 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="enrollid" name="主键" underline="true"/>
+                            <#input id="projectid" name="项目id" underline="true"/>
+                            <#input id="name" name="姓名" underline="true"/>
+                            <#input id="telephone" name="手机号" underline="true"/>
+                            <#input id="sex" name="性别" underline="true"/>
+                            <#input id="age" name="年龄" underline="true"/>
+                            <#input id="disease" name="所患疾病"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="province" name="省" underline="true"/>
+                            <#input id="city" name="市" underline="true"/>
+                            <#input id="district" name="区" underline="true"/>
+                            <#input id="detailAddress" name="详细地址" underline="true"/>
+                            <#input id="comment" name="备注" underline="true"/>
+                            <#input id="state" name="状态:(0:等待审核; 1:已通过; 2:已被拒)" underline="true"/>
+                            <#input id="createDate" name="创建日期" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="EnrollInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="EnrollInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/custom/enroll/enroll_info.js"></script>
+@}
