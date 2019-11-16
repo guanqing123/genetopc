@@ -19,6 +19,14 @@
         <result column="comment" property="comment" />
         <result column="state" property="state" />
         <result column="create_date" property="createDate" />
+        <!-- 图片 -->
+        <collection property="images" ofType="com.stylefeng.guns.modular.custom.model.EnrollImage">
+        	<id column="imageid" property="imageid"/>
+        	<result column="image_enrollid" property="enrollid" />
+        	<result column="file_key" property="fileKey"/>
+        	<result column="file_path" property="filePath"/>
+        	<result column="image_create_date" property="createDate"/>
+        </collection>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -27,11 +35,18 @@
     </sql>
     
     <select id="listByCondition" resultMap="BaseResultMap">
-    	select a.enrollid, a.projectid, b.xmmc, a.name, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.comment, a.state, a.create_date
+    	select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date
     	 from gene_enroll a 
     	 inner join gene_project b on a.projectid=b.projectid
     	 where 1=1
     	 order by a.create_date desc
     </select>
 
+	<select id="enrollDetailById" resultMap="BaseResultMap">
+		select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date, c.imageid, c.enrollid image_enrollid, c.file_key, c.file_path, c.create_date image_create_date 
+			from gene_enroll a 
+			inner join gene_project b on a.projectid=b.projectid
+			left join gene_enroll_image c on a.enrollid=c.enrollid
+		where a.enrollid = #{enrollid}
+	</select>
 </mapper>

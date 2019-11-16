@@ -1,4 +1,24 @@
 @layout("/common/_container.html"){
+<style>
+.wait {
+	font-weight: bold;
+	color: #FFDC00;
+}
+.pass {
+	font-weight: bold;
+    color: #2ECC40;
+}
+.refuse {
+	font-weight: bold;
+    color: #FF4136;
+}
+.fa-male {
+	font-size: 18px;
+}
+.fa-female {
+	font-size: 18px;
+}
+</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
@@ -18,7 +38,7 @@
                         </div>
                         <div class="hidden-xs" id="EnrollTableToolbar" role="group">
                             @if(shiro.hasPermission("/enroll/detail")){
-                                <#button name="详情审核" icon="fa-edit" clickFun="Enroll.openAddEnroll()"/>
+                                <#button name="详情审核" icon="fa-edit" clickFun="Enroll.openEnrollDetail()"/>
                             @}
                         </div>
                         <#table id="EnrollTable"/>
@@ -28,5 +48,7 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/zh-cn.js"></script>
 <script src="${ctxPath}/static/modular/custom/enroll/enroll.js"></script>
 @}

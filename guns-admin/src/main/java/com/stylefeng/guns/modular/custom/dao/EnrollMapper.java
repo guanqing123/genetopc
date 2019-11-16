@@ -18,4 +18,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 public interface EnrollMapper extends BaseMapper<Enroll> {
 	
 	List<Enroll> listByCondition(Page<Enroll> page, String condition);
+
+	Enroll enrollDetailById(Integer enrollId);
 }

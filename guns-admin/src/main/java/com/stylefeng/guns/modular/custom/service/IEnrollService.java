@@ -19,4 +19,5 @@ public interface IEnrollService extends IService<Enroll> {
 
 	List<Enroll> listByCondition(Page<Enroll> page, String condition);
 
+	Enroll enrollDetailById(Integer enrollId);
 }

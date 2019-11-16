@@ -27,4 +27,10 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 		return this.baseMapper.listByCondition(page, condition);
 	}
 
+	@Override
+	public Enroll enrollDetailById(Integer enrollId) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.enrollDetailById(enrollId);
+	}
+	
 }

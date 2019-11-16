@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
@@ -87,9 +89,13 @@ public class Enroll extends Model<Enroll> {
      */
     @TableField("create_date")
     private Date createDate;
+    /**
+     * 报名图片
+     */
+    @TableField(exist = false)
+    private List<EnrollImage> images;
 
-
-    public Integer getEnrollid() {
+	public Integer getEnrollid() {
         return enrollid;
     }
 
@@ -208,6 +214,14 @@ public class Enroll extends Model<Enroll> {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+    
+    public List<EnrollImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<EnrollImage> images) {
+		this.images = images;
+	}
 
     @Override
     protected Serializable pkVal() {
