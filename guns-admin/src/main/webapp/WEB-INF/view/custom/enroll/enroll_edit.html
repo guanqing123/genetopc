@@ -1,35 +1,99 @@
 @layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/blueimp/css/blueimp-gallery.min.css">
+<style>
+.lightBoxGallery a{
+  margin:10px 5px;
+  display: inline-block
+}
+.check {
+  margin-top: 20px;
+}
+.check-state {
+  text-align: left !important;	
+}
+.check-comment {
+  clear: both;	
+  position: relative;
+  box-sizing: border-box;
+  padding: 45px 15px 15px;
+  border-color: #e5e5e5 #eee #eee;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+          box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+}
+.check-comment:after {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #959595;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  content: "审核意见";
+}
+</style>
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
 
-            <input type="hidden" id="id" value="${item}">
+            <input type="hidden" id="enrollid" value="${item.enrollid}">
 
             <div class="row">
-                <div class="col-sm-6 b-r">
-                            <#input id="enrollid" name="主键" value="${item.enrollid}" underline="true"/>
-                            <#input id="projectid" name="项目id" value="${item.projectid}" underline="true"/>
-                            <#input id="name" name="姓名" value="${item.name}" underline="true"/>
-                            <#input id="telephone" name="手机号" value="${item.telephone}" underline="true"/>
-                            <#input id="sex" name="性别" value="${item.sex}" underline="true"/>
-                            <#input id="age" name="年龄" value="${item.age}" underline="true"/>
-                            <#input id="disease" name="所患疾病" value="${item.disease}" />
+                <div class="col-sm-8 b-r">
+                	<div class="col-sm-7">
+                		<#input id="xmmc" name="项目名称" value="${item.xmmc}" underline="true"/>
+                		<#input id="state" name="状态" value="${decode(item.state,0,'等待审核',1,'已批准',2,'已拒绝')}" underline="true"/>
+                        <#input id="disease" name="所患疾病" value="${item.disease}" underline="true"/>
+                        <#input id="address" name="所在地区" value="${item.province} ${item.city} ${item.district}" underline="true"/>
+                        <#input id="detailAddress" name="详细地址" value="${item.detailAddress}" underline="true"/>
+                        <#input id="comment" name="备注" value="${item.comment}" underline="true"/>
+                	</div>
+                	<div class="col-sm-5">
+                		<#input id="name" name="姓名" value="${item.name}" underline="true"/>
+                		<#input id="sex" name="性别" value="${item.sex}" underline="true"/>
+                		<#input id="age" name="年龄" value="${item.age}" underline="true"/>
+                		<#input id="telephone" name="手机号" value="${item.telephone}" underline="true"/>
+                        <#input id="createDate" name="创建日期" value="${item.createDate}" underline="true"/>
+                	</div>
                 </div>
 
-                <div class="col-sm-6">
-                            <#input id="province" name="省" value="${item.province}" underline="true"/>
-                            <#input id="city" name="市" value="${item.city}" underline="true"/>
-                            <#input id="district" name="区" value="${item.district}" underline="true"/>
-                            <#input id="detailAddress" name="详细地址" value="${item.detailAddress}" underline="true"/>
-                            <#input id="comment" name="备注" value="${item.comment}" underline="true"/>
-                            <#input id="state" name="状态:(0:等待审核; 1:已通过; 2:已被拒)" value="${item.state}" underline="true"/>
-                            <#input id="createDate" name="创建日期" value="${item.createDate}" />
+                <div class="col-sm-4">
+                    <div class="lightBoxGallery">
+                        @for(image in item.images) {
+                            <a href="${image.filePath}" title="浏览图片" data-gallery=""><img src="${image.filePath+'?x-oss-process=image/resize,m_fill,h_100,w_100'}"></a>
+                        @}
+                        <div id="blueimp-gallery" class="blueimp-gallery">
+                            <div class="slides"></div>
+                            <h3 class="title"></h3>
+                            <a class="prev">‹</a>
+                            <a class="next">›</a>
+                            <a class="close">×</a>
+                            <a class="play-pause"></a>
+                            <ol class="indicator"></ol>
+                        </div>
+                    </div>
+                    <div class="form-group check">
+	                    <label class="col-sm-3 control-label check-state">审核状态</label>
+						<div class="col-sm-9">
+						    <label class="radio-inline">
+						        <input type="radio" checked="checked" value="1" id="check_state" name="check_state">通过
+						    </label>
+						    <label class="radio-inline">
+						        <input type="radio" value="2" id="check_state" name="check_state">拒绝
+						    </label>
+						</div>
+						<div class="check-comment">
+							<textarea class="form-control" id="check_comment" name="check_comment" rows="3"></textarea>
+						</div>
+					</div>
                 </div>
             </div>
 
             <div class="row btn-group-m-t">
                 <div class="col-sm-10">
-                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="EnrollInfoDlg.editSubmit()"/>
+                    <#button btnCss="info" name="审核" id="ensure" icon="fa-check" clickFun="EnrollInfoDlg.editSubmit()"/>
                     <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="EnrollInfoDlg.close()"/>
                 </div>
             </div>
@@ -37,5 +101,6 @@
 
     </div>
 </div>
+<script src="${ctxPath}/static/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
 <script src="${ctxPath}/static/modular/custom/enroll/enroll_info.js"></script>
 @}

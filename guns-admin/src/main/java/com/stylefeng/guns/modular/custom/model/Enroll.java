@@ -1,16 +1,14 @@
 package com.stylefeng.guns.modular.custom.model;
 
 import java.io.Serializable;
-
-import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import java.util.List;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -90,6 +88,16 @@ public class Enroll extends Model<Enroll> {
     @TableField("create_date")
     private Date createDate;
     /**
+     * 审核意见
+     */
+    @TableField("check_comment")
+    private String checkComment;
+    /**
+     * 审核日期
+     */
+    @TableField("check_date")
+    private Date checkDate;
+	/**
      * 报名图片
      */
     @TableField(exist = false)
@@ -215,6 +223,22 @@ public class Enroll extends Model<Enroll> {
         this.createDate = createDate;
     }
     
+    public String getCheckComment() {
+		return checkComment;
+	}
+
+	public void setCheckComment(String checkComment) {
+		this.checkComment = checkComment;
+	}
+
+	public Date getCheckDate() {
+		return checkDate;
+	}
+
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
+    
     public List<EnrollImage> getImages() {
 		return images;
 	}
@@ -246,6 +270,8 @@ public class Enroll extends Model<Enroll> {
         ", comment=" + comment +
         ", state=" + state +
         ", createDate=" + createDate +
+        ", checkComment=" + checkComment +
+        ", checkDate=" + checkDate +
         "}";
     }
 }

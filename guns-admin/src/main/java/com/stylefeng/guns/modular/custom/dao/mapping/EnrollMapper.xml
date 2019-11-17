@@ -19,6 +19,8 @@
         <result column="comment" property="comment" />
         <result column="state" property="state" />
         <result column="create_date" property="createDate" />
+        <result column="check_comment" property="checkComment" />
+        <result column="check_date" property="checkDate"/>
         <!-- 图片 -->
         <collection property="images" ofType="com.stylefeng.guns.modular.custom.model.EnrollImage">
         	<id column="imageid" property="imageid"/>
@@ -35,7 +37,7 @@
     </sql>
     
     <select id="listByCondition" resultMap="BaseResultMap">
-    	select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date
+    	select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date, a.check_comment, a.check_date
     	 from gene_enroll a 
     	 inner join gene_project b on a.projectid=b.projectid
     	 where 1=1
@@ -43,7 +45,7 @@
     </select>
 
 	<select id="enrollDetailById" resultMap="BaseResultMap">
-		select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date, c.imageid, c.enrollid image_enrollid, c.file_key, c.file_path, c.create_date image_create_date 
+		select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date, a.check_comment, a.check_date, c.imageid, c.enrollid image_enrollid, c.file_key, c.file_path, c.create_date image_create_date 
 			from gene_enroll a 
 			inner join gene_project b on a.projectid=b.projectid
 			left join gene_enroll_image c on a.enrollid=c.enrollid
