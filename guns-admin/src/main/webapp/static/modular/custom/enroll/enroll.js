@@ -111,6 +111,7 @@ Enroll.openEnrollCheck = function () {
 Enroll.search = function () {
     var queryData = {};
     queryData['condition'] = $("#condition").val();
+    queryData['state']=$("input[type='radio'][name='state']:checked").val();
     Enroll.table.refresh({query: queryData});
 };
 

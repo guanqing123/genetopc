@@ -22,9 +22,9 @@ import org.springframework.stereotype.Service;
 public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> implements IEnrollService {
 
 	@Override
-	public List<Enroll> listByCondition(Page<Enroll> page, String condition) {
+	public List<Enroll> listByCondition(Page<Enroll> page, String condition, String state) {
 		// TODO Auto-generated method stub
-		return this.baseMapper.listByCondition(page, condition);
+		return this.baseMapper.listByCondition(page, condition, state);
 	}
 
 	@Override

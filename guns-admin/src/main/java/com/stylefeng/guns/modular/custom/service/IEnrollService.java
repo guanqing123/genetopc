@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IEnrollService extends IService<Enroll> {
 
-	List<Enroll> listByCondition(Page<Enroll> page, String condition);
+	List<Enroll> listByCondition(Page<Enroll> page, String condition, String state);
 
 	Enroll enrollDetailById(Integer enrollId);
 

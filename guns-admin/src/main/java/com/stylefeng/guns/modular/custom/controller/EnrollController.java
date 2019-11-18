@@ -52,9 +52,9 @@ public class EnrollController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
+    public Object list(String condition, String state) {
     	Page<Enroll> page = new PageFactory<Enroll>().defaultPage();
-    	List<Enroll> list = enrollService.listByCondition(page, condition);
+    	List<Enroll> list = enrollService.listByCondition(page, condition, state);
         page.setRecords(list);
         return super.packForBT(page);
     }

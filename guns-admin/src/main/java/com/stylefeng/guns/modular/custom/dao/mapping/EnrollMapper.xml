@@ -41,6 +41,12 @@
     	 from gene_enroll a 
     	 inner join gene_project b on a.projectid=b.projectid
     	 where 1=1
+    	 <if test="null!=condition and condition!=''">
+    	 	and (b.xmmc like concat(%,#{condition},%) or a.telephone like concat(%,#{condition},%) or a.`name` like concat(%,#{condition},%))
+    	 </if>
+    	 <if test="null!=state and state!=''">
+    	 	and a.state in (${state})
+    	 </if>
     	 order by a.create_date desc
     </select>
 
