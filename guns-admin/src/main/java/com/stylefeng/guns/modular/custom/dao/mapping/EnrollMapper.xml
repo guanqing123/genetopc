@@ -49,6 +49,10 @@
 			from gene_enroll a 
 			inner join gene_project b on a.projectid=b.projectid
 			left join gene_enroll_image c on a.enrollid=c.enrollid
-		where a.enrollid = #{enrollid}
+		where a.enrollid = #{enrollId}
 	</select>
+	
+	<update id="check">
+		update gene_enroll set state=#{checkState},check_comment=#{checkComment},check_date=NOW() where enrollid = #{enrollId}
+	</update>
 </mapper>

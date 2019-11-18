@@ -44,7 +44,7 @@
                 <div class="col-sm-8 b-r">
                 	<div class="col-sm-7">
                 		<#input id="xmmc" name="项目名称" value="${item.xmmc}" underline="true"/>
-                		<#input id="state" name="状态" value="${decode(item.state,0,'等待审核',1,'已批准',2,'已拒绝')}" underline="true"/>
+                		<#input id="state" name="状态" value="${decode(item.state,0,'等待审核',1,'已通过',2,'已拒绝')}" underline="true"/>
                         <#input id="disease" name="所患疾病" value="${item.disease}" underline="true"/>
                         <#input id="address" name="所在地区" value="${item.province} ${item.city} ${item.district}" underline="true"/>
                         <#input id="detailAddress" name="详细地址" value="${item.detailAddress}" underline="true"/>
@@ -78,14 +78,22 @@
 	                    <label class="col-sm-3 control-label check-state">审核状态</label>
 						<div class="col-sm-9">
 						    <label class="radio-inline">
-						        <input type="radio" checked="checked" value="1" id="check_state" name="check_state">通过
+						        <input type="radio" 
+						        @{
+						        	${decode(item.state,0,'checked="checked"',1,'checked="checked"','')}
+						        @}
+								value="1" id="check_state" name="check_state">通过
 						    </label>
 						    <label class="radio-inline">
-						        <input type="radio" value="2" id="check_state" name="check_state">拒绝
+						        <input type="radio"
+						        @{ 
+						        	${decode(item.state,2,'checked="checked"','')}
+						        @}
+						        value="2" id="check_state" name="check_state">拒绝
 						    </label>
 						</div>
 						<div class="check-comment">
-							<textarea class="form-control" id="check_comment" name="check_comment" rows="3"></textarea>
+							<textarea class="form-control" id="check_comment" name="check_comment" rows="3">${item.checkComment}</textarea>
 						</div>
 					</div>
                 </div>
@@ -93,8 +101,8 @@
 
             <div class="row btn-group-m-t">
                 <div class="col-sm-10">
-                    <#button btnCss="info" name="审核" id="ensure" icon="fa-check" clickFun="EnrollInfoDlg.editSubmit()"/>
-                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="EnrollInfoDlg.close()"/>
+                    <#button btnCss="info" name="审核" id="ensure" icon="fa-check" clickFun="EnrollCheckDlg.checkSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="EnrollCheckDlg.close()"/>
                 </div>
             </div>
         </div>
@@ -102,5 +110,5 @@
     </div>
 </div>
 <script src="${ctxPath}/static/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
-<script src="${ctxPath}/static/modular/custom/enroll/enroll_info.js"></script>
+<script src="${ctxPath}/static/modular/custom/enroll/enroll_check.js"></script>
 @}

@@ -5,6 +5,7 @@ import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,11 +40,11 @@ public class EnrollController extends BaseController {
     /**
      * 跳转到详情审核
      */
-    @RequestMapping("/enroll_detail/{enrollId}")
-    public String enrollDetail(@PathVariable Integer enrollId, Model model) {
+    @RequestMapping("/enroll_check/{enrollId}")
+    public String enrollCheck(@PathVariable Integer enrollId, Model model) {
         Enroll enroll = enrollService.enrollDetailById(enrollId);
         model.addAttribute("item", enroll);
-        return PREFIX + "enroll_edit.html";
+        return PREFIX + "enroll_check.html";
     }
 
     /**
@@ -59,11 +60,12 @@ public class EnrollController extends BaseController {
     }
 
     /**
-     * 报名列表详情
+     * 报名审核
      */
-    @RequestMapping(value = "/detail/{enrollId}")
+    @RequestMapping(value = "/check")
     @ResponseBody
-    public Object detail(@PathVariable("enrollId") Integer enrollId) {
-        return enrollService.selectById(enrollId);
+    public Object check(@RequestParam Integer enrollid,@RequestParam String checkState,@RequestParam String checkComment) {
+    	enrollService.check(enrollid, checkState, checkComment);
+        return SUCCESS_TIP;
     }
 }

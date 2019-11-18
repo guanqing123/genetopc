@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.custom.service;
 
+import com.stylefeng.guns.core.base.tips.Tip;
 import com.stylefeng.guns.modular.custom.model.Project;
 import com.stylefeng.guns.modular.custom.model.ProjectCity;
 import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
@@ -40,4 +41,6 @@ public interface IProjectService extends IService<Project> {
 	void hospitalDelete(Integer hospitalid);
 
 	void cityDelete(Integer cityid);
+
+	Tip projectDelete(Integer projectId);
 }

@@ -18,6 +18,10 @@
 .fa-female {
 	font-size: 18px;
 }
+.state_radio {
+	padding-right: 10px;
+}
+.tip{width:200px;height:80px;display:none;background-color:#f6f7f7;color:#333333;line-height:18px;border:1px solid #e1e3e2;padding:5px;}
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -28,19 +32,37 @@
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
-                        <div class="row">
+                    	<img id="tooltip" class="tip"></img>
+                    	<form class="form-inline clearfix" role="form">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#NameCon id="condition" name="项目/姓名/手机号" />
                             </div>
-                            <div class="col-sm-3">
-                                <#button name="搜索" icon="fa-search" clickFun="Enroll.search()"/>
-                            </div>
-                        </div>
+							<div class="radio">
+								<label class="state_radio">
+									状态
+								</label>
+								<label class="state_radio">
+									<input type="radio" checked="checked" name="state" value="0,1,2">全部
+								</label>
+								<label class="state_radio">
+									<input type="radio" name="state" value="0">等待审核
+								</label>
+								<label class="state_radio">
+									<input type="radio" name="state" value="1">已通过
+								</label>
+								<label class="state_radio">
+									<input type="radio" name="state" value="2">已拒绝
+								</label>
+								<#button name="搜索" icon="fa-search" clickFun="Enroll.search()"/>
+							</div>
+						</form>
+                    
                         <div class="hidden-xs" id="EnrollTableToolbar" role="group">
-                            @if(shiro.hasPermission("/enroll/detail")){
-                                <#button name="详情审核" icon="fa-edit" clickFun="Enroll.openEnrollDetail()"/>
+                            @if(shiro.hasPermission("/enroll/check")){
+                                <#button name="报名审核" icon="fa-edit" clickFun="Enroll.openEnrollCheck()"/>
                             @}
                         </div>
+                        
                         <#table id="EnrollTable"/>
                     </div>
                 </div>

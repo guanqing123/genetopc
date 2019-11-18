@@ -430,8 +430,7 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Object delete(@RequestParam Integer projectId) {
-        projectService.deleteById(projectId);
-        return SUCCESS_TIP;
+        return projectService.projectDelete(projectId);
     }
 
     /**

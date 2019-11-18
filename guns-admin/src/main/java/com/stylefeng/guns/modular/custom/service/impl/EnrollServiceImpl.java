@@ -32,5 +32,11 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 		// TODO Auto-generated method stub
 		return this.baseMapper.enrollDetailById(enrollId);
 	}
+
+	@Override
+	public void check(Integer enrollId, String checkState, String checkComment) {
+		// TODO Auto-generated method stub
+		this.baseMapper.check(enrollId, checkState, checkComment);
+	}
 	
 }

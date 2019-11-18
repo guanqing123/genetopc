@@ -88,17 +88,17 @@ Enroll.check = function () {
 };
 
 /**
- * 打开查看报名列表详情
+ * 打开报名审核页面
  */
-Enroll.openEnrollDetail = function () {
+Enroll.openEnrollCheck = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '报名详情审核',
+            title: '报名审核',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/enroll/enroll_detail/' + Enroll.seItem.enrollid
+            content: Feng.ctxPath + '/enroll/enroll_check/' + Enroll.seItem.enrollid
         });
         this.layerIndex = index;
         layer.full(index);
