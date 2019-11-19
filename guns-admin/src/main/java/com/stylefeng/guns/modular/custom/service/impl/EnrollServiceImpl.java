@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.custom.service.impl;
 
+import com.stylefeng.guns.modular.custom.model.DownloadEnroll;
 import com.stylefeng.guns.modular.custom.model.Enroll;
+import com.stylefeng.guns.modular.custom.model.ImageData;
 import com.stylefeng.guns.modular.custom.dao.EnrollMapper;
 import com.stylefeng.guns.modular.custom.service.IEnrollService;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -38,5 +40,22 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 		// TODO Auto-generated method stub
 		this.baseMapper.check(enrollId, checkState, checkComment);
 	}
-	
+
+	@Override
+	public List<DownloadEnroll> downloadEnroll(String condition, String state) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.downloadEnroll(condition, state);
+	}
+
+	@Override
+	public DownloadEnroll downloadEnroll(Integer enrollid) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.oneEnroll(enrollid);
+	}
+
+	@Override
+	public List<ImageData> downloadEnrollImage(Integer enrollid) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.downloadEnrollImage(enrollid);
+	}
 }

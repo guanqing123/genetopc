@@ -51,6 +51,7 @@
 		<ali-sms.version>1.0.0</ali-sms.version>
 		<ali-ons.version>1.7.8.Final</ali-ons.version>
 		<guava.version>20.0</guava.version>
+		<easyexcel.version>2.1.1</easyexcel.version>
 	</properties>
 
 	<dependencyManagement>
@@ -232,7 +233,12 @@
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
 			</dependency>
-
+			<!-- excel解析 -->
+	        <dependency>
+			    <groupId>com.alibaba</groupId>
+			    <artifactId>easyexcel</artifactId>
+			    <version>${easyexcel.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

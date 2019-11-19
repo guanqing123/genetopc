@@ -21,7 +21,16 @@
 .state_radio {
 	padding-right: 10px;
 }
-.tip{width:200px;height:80px;display:none;background-color:#f6f7f7;color:#333333;line-height:18px;border:1px solid #e1e3e2;padding:5px;}
+.tip{
+	width:200px;
+	height:80px;
+	display:none;
+	background-color:#f6f7f7;
+	color:#333333;
+	line-height:18px;
+	border:1px solid #e1e3e2;
+	padding:5px;
+}
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -61,6 +70,12 @@
                             @if(shiro.hasPermission("/enroll/check")){
                                 <#button name="报名审核" icon="fa-edit" clickFun="Enroll.openEnrollCheck()"/>
                             @}
+                            @if(shiro.hasPermission("/enroll/exportOne")){
+                                <#button name="单张导出" icon="fa-download" clickFun="Enroll.exportOne()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/enroll/export")){
+                                <#button name="批量导出" icon="fa-cloud-download" clickFun="Enroll.export()" space="true"/>
+                            @}
                         </div>
                         
                         <#table id="EnrollTable"/>
@@ -72,5 +87,6 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/zh-cn.js"></script>
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
 <script src="${ctxPath}/static/modular/custom/enroll/enroll.js"></script>
 @}

@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.custom.service;
 
+import com.stylefeng.guns.modular.custom.model.DownloadEnroll;
 import com.stylefeng.guns.modular.custom.model.Enroll;
+import com.stylefeng.guns.modular.custom.model.ImageData;
 
 import java.util.List;
 
@@ -22,4 +24,10 @@ public interface IEnrollService extends IService<Enroll> {
 	Enroll enrollDetailById(Integer enrollId);
 
 	void check(Integer enrollId, String checkState, String checkComment);
+
+	List<DownloadEnroll> downloadEnroll(String condition, String state);
+
+	DownloadEnroll downloadEnroll(Integer enrollid);
+
+	List<ImageData> downloadEnrollImage(Integer enrollid);
 }

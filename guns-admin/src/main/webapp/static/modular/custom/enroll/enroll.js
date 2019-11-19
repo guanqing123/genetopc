@@ -106,6 +106,22 @@ Enroll.openEnrollCheck = function () {
 };
 
 /**
+ * 导出某条记录
+ */
+Enroll.exportOne = function() {
+	if (this.check()) {
+		window.location.href = Feng.ctxPath + '/enroll/exportOne?enrollid=' + Enroll.seItem.enrollid
+	}
+}
+
+/**
+ * 导出记录
+ */
+Enroll.export = function() {
+	window.location.href = Feng.ctxPath + '/enroll/export?condition=' + $("#condition").val() + "&state=" + $("input[type='radio'][name='state']:checked").val();
+}
+
+/**
  * 查询报名列表列表
  */
 Enroll.search = function () {

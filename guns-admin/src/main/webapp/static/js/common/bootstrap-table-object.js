@@ -32,6 +32,7 @@
             this.btInstance =
                 $('#' + tableId).bootstrapTable({
                     contentType: "application/x-www-form-urlencoded",
+                    exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
                     url: this.url,				//请求地址
                     method: this.method,		//ajax方式,post还是get
                     ajaxOptions: {				//ajax请求的附带参数

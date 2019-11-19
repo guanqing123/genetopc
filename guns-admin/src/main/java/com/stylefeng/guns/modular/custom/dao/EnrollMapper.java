@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.custom.dao;
 
+import com.stylefeng.guns.modular.custom.model.DownloadEnroll;
 import com.stylefeng.guns.modular.custom.model.Enroll;
+import com.stylefeng.guns.modular.custom.model.ImageData;
 
 import java.util.List;
 
@@ -24,4 +26,10 @@ public interface EnrollMapper extends BaseMapper<Enroll> {
 	Enroll enrollDetailById(@Param("enrollId") Integer enrollId);
 
 	void check(@Param("enrollId") Integer enrollId,@Param("checkState") String checkState,@Param("checkComment") String checkComment);
+
+	List<DownloadEnroll> downloadEnroll(@Param("condition") String condition,@Param("state") String state);
+
+	DownloadEnroll oneEnroll(@Param("enrollid") Integer enrollid);
+
+	List<ImageData> downloadEnrollImage(@Param("enrollid") Integer enrollid);
 }

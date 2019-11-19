@@ -42,7 +42,7 @@
     	 inner join gene_project b on a.projectid=b.projectid
     	 where 1=1
     	 <if test="null!=condition and condition!=''">
-    	 	and (b.xmmc like concat(%,#{condition},%) or a.telephone like concat(%,#{condition},%) or a.`name` like concat(%,#{condition},%))
+    	 	and (b.xmmc like concat('%',#{condition},'%') or a.telephone like concat('%',#{condition},'%') or a.`name` like concat('%',#{condition},'%'))
     	 </if>
     	 <if test="null!=state and state!=''">
     	 	and a.state in (${state})
@@ -61,4 +61,52 @@
 	<update id="check">
 		update gene_enroll set state=#{checkState},check_comment=#{checkComment},check_date=NOW() where enrollid = #{enrollId}
 	</update>
+	
+	<resultMap id="downloadData" type="com.stylefeng.guns.modular.custom.model.DownloadEnroll">
+        <id column="enrollid" property="enrollid" />
+        <result column="projectid" property="projectid" />
+        <result column="xmmc" property="xmmc" />
+        <result column="name" property="name" />
+        <result column="telephone" property="telephone" />
+        <result column="sex" property="sex" />
+        <result column="age" property="age" />
+        <result column="disease" property="disease" />
+        <result column="address" property="address" />
+        <result column="detail_address" property="detailAddress" />
+        <result column="comment" property="comment" />
+        <result column="state" property="state" />
+        <result column="create_date" property="createDate" />
+        <result column="check_comment" property="checkComment" />
+        <result column="check_date" property="checkDate"/>
+    </resultMap>
+	
+	<select id="downloadEnroll" resultMap="downloadData">
+    	select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, CONCAT(province,' ',city,' ',district) address, a.detail_address, a.`comment`, case when a.state=0 then '等待审核' when a.state=1 then '已通过' when a.state=2 then '已拒绝' end state, a.create_date, a.check_comment, a.check_date
+    	 from gene_enroll a 
+    	 inner join gene_project b on a.projectid=b.projectid
+    	 where 1=1
+    	 <if test="null!=condition and condition!=''">
+    	 	and (b.xmmc like concat('%',#{condition},'%') or a.telephone like concat('%',#{condition},'%') or a.`name` like concat('%',#{condition},'%'))
+    	 </if>
+    	 <if test="null!=state and state!=''">
+    	 	and a.state in (${state})
+    	 </if>
+    	 order by a.create_date desc
+	</select>
+	
+	<select id="oneEnroll" resultMap="downloadData">
+		select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, CONCAT(province,' ',city,' ',district) address, a.detail_address, a.`comment`, case when a.state=0 then '等待审核' when a.state=1 then '已通过' when a.state=2 then '已拒绝' end state, a.create_date, a.check_comment, a.check_date
+    	 from gene_enroll a 
+    	 inner join gene_project b on a.projectid=b.projectid
+    	 where a.enrollid = #{enrollid}
+	</select>
+	
+	<resultMap type="com.stylefeng.guns.modular.custom.model.ImageData" id="downloadImage">
+		<result column="file_path" property="filePath" typeHandler="com.stylefeng.guns.modular.custom.model.StringToURLTypeHandler"/>
+	</resultMap>
+	
+	<select id="downloadEnrollImage" resultMap="downloadImage">
+		select file_path from gene_enroll_image where enrollid = #{enrollid}
+	</select>
+	
 </mapper>
