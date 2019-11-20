@@ -38,7 +38,7 @@ ProjectCityDlg.initColumn = function() {
         	title: '操作', field: 'operate', visible: true, align: 'center', valign: 'middle',
         	formatter: function(value, row, index) {
 				return [
-					'<button type="button" class="btn btn-xs btn-primary addhospital" style="margin-bottom: 0px"><i class="fa fa-arrow-right"></i>&nbsp;添加医院</button>'
+					'<button type="button" class="btn btn-xs btn-primary addhospital" style="margin-bottom: 0px"><i class="fa fa-arrow-right"></i>&nbsp;已添加的医院</button>'
 				].join('');
 			},
 			events: 'operateCity'

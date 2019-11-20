@@ -2,9 +2,13 @@ package com.stylefeng.guns.http.persistence;
 
 import com.stylefeng.guns.http.model.Enroll;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * <p>
@@ -17,4 +21,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 @Mapper
 public interface EnrollMapper extends BaseMapper<Enroll> {
 
+	List<Enroll> getEnrollList(Page<Enroll> page,@Param("state") String state);
 }

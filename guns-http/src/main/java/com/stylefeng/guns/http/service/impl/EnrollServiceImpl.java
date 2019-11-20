@@ -8,6 +8,7 @@ import com.stylefeng.guns.http.model.EnrollImage;
 import com.stylefeng.guns.http.persistence.EnrollImageMapper;
 import com.stylefeng.guns.http.persistence.EnrollMapper;
 import com.stylefeng.guns.http.service.IEnrollService;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
 import java.util.List;
@@ -37,12 +38,9 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 	@Override
 	public void saveEnroll(Enroll enroll) {
 		// TODO Auto-generated method stub
-		System.out.println("----之前----" + enroll.getFiles().length);
 		List<FilePath> paths = ossUtil.transferTo(enroll.getFiles());
-		System.out.println("----之后----" + enroll);
 		try {
 			this.insert(enroll);
-			System.out.println("----之后之后----" + enroll);
 			for (FilePath path : paths) {
 				EnrollImage image = new EnrollImage();
 				image.setEnrollid(enroll.getEnrollid());
@@ -53,5 +51,11 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 		} catch (Exception e) {
 			throw new FileUploadException(500, e.getMessage(), paths);
 		}
+	}
+
+	@Override
+	public List<Enroll> getEnrollList(Page<Enroll> page, String state) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.getEnrollList(page, state);
 	}
 }

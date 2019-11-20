@@ -34,6 +34,16 @@ public class Enroll extends Model<Enroll> {
      */
     private Integer projectid;
     /**
+     * 项目名称
+     */
+    @TableField(exist = false)
+    private String  xmmc;
+    /**
+     * 缩略图
+     */
+    @TableField(exist = false)
+    private String  sltPath;
+	/**
      * 姓名
      */
     private String name;
@@ -104,6 +114,22 @@ public class Enroll extends Model<Enroll> {
     public void setProjectid(Integer projectid) {
         this.projectid = projectid;
     }
+    
+    public String getXmmc() {
+		return xmmc;
+	}
+
+	public void setXmmc(String xmmc) {
+		this.xmmc = xmmc;
+	}
+	
+	public String getSltPath() {
+		return sltPath;
+	}
+
+	public void setSltPath(String sltPath) {
+		this.sltPath = sltPath;
+	}
 
     public String getName() {
         return name;
