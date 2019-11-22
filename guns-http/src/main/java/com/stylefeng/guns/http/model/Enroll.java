@@ -2,6 +2,7 @@ package com.stylefeng.guns.http.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -94,10 +95,25 @@ public class Enroll extends Model<Enroll> {
     @TableField("create_date")
     private Date createDate;
     /**
+     * 审核备注
+     */
+    @TableField("check_comment")
+    private String checkComment;
+	/**
+     * 审核日期
+     */
+    @TableField("check_date")
+    private Date checkDate;
+    /**
      * 附件
      */
     @TableField(exist = false)
     private MultipartFile[] files;
+    /**
+     * 浏览图片
+     */
+    @TableField(exist = false)
+    private List<EnrollImage> images;
 
 	public Integer getEnrollid() {
         return enrollid;
@@ -227,12 +243,36 @@ public class Enroll extends Model<Enroll> {
         this.createDate = createDate;
     }
     
+    public String getCheckComment() {
+		return checkComment;
+	}
+
+	public void setCheckComment(String checkComment) {
+		this.checkComment = checkComment;
+	}
+
+	public Date getCheckDate() {
+		return checkDate;
+	}
+
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
+    
     public MultipartFile[] getFiles() {
 		return files;
 	}
 
 	public void setFiles(MultipartFile[] files) {
 		this.files = files;
+	}
+	
+	public List<EnrollImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<EnrollImage> images) {
+		this.images = images;
 	}
 
     @Override
@@ -257,6 +297,8 @@ public class Enroll extends Model<Enroll> {
         ", comment=" + comment +
         ", state=" + state +
         ", createDate=" + createDate +
+        ", checkComment=" + checkComment +
+        ", checkDate=" + checkDate +
         "}";
     }
 }

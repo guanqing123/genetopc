@@ -20,6 +20,12 @@
         <result column="comment" property="comment" />
         <result column="state" property="state" />
         <result column="create_date" property="createDate" />
+        <result column="check_comment" property="checkComment" />
+        <result column="check_date" property="checkDate" />
+        <collection property="images" ofType="com.stylefeng.guns.http.model.EnrollImage">
+        	<id column="imageid" property="imageid" />
+        	<result column="file_path" property="filePath" />
+        </collection>
     </resultMap>
     
     <select id="getEnrollList" resultMap="BaseResultMap">
@@ -27,6 +33,13 @@
     		from gene_enroll a 
     		inner join gene_project b on a.projectid = b.projectid
 		where a.state = #{state}
+    </select>
+    
+    <select id="detailEnroll" resultMap="BaseResultMap">
+    	select a.enrollid,a.projectid,a.`name`,a.telephone,a.sex,a.age,a.disease,a.province,a.city,a.district,a.detail_address,a.`comment`,a.state,a.create_date,a.check_comment,a.check_date,b.imageid,b.file_path 
+    		from gene_enroll a
+			left join gene_enroll_image b on a.enrollid=b.enrollid
+		where a.enrollid = #{enrollid}
     </select>
 
 </mapper>

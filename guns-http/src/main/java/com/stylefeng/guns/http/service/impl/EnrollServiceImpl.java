@@ -8,6 +8,7 @@ import com.stylefeng.guns.http.model.EnrollImage;
 import com.stylefeng.guns.http.persistence.EnrollImageMapper;
 import com.stylefeng.guns.http.persistence.EnrollMapper;
 import com.stylefeng.guns.http.service.IEnrollService;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
@@ -57,5 +58,25 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 	public List<Enroll> getEnrollList(Page<Enroll> page, String state) {
 		// TODO Auto-generated method stub
 		return this.baseMapper.getEnrollList(page, state);
+	}
+
+	@Transactional
+	@Override
+	public void deleteEnroll(Integer enrollid) {
+		// TODO Auto-generated method stub
+		EntityWrapper<EnrollImage> wrapper = new EntityWrapper<>();
+		wrapper.eq("enrollid", enrollid);
+		List<EnrollImage> images = enrollImageMapper.selectList(wrapper);
+		this.baseMapper.deleteById(enrollid);
+		enrollImageMapper.delete(wrapper);
+		images.forEach(image->{
+			ossUtil.deleteObject(image.getFileKey());
+		});
+	}
+
+	@Override
+	public Enroll detailEnroll(Integer enrollid) {
+		// TODO Auto-generated method stub
+		return this.baseMapper.detailEnroll(enrollid);
 	}
 }

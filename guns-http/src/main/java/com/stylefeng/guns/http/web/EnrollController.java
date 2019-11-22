@@ -51,6 +51,28 @@ public class EnrollController {
 		return ResultUtil.success();
 	}
 	
+	@ApiOperation(value = "查看报名详情")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="enrollid", value="报名ID", required=true, paramType="query", dataType="int", defaultValue="0")
+	})
+	@PostMapping(value = "/detailEnroll")
+	@ResponseBody
+	public Result<Object> detailEnroll(@RequestParam Integer enrollid) {
+		Enroll enroll = enrollServiceImpl.detailEnroll(enrollid);
+		return ResultUtil.success(enroll);
+	}
+	
+	@ApiOperation(value = "删除报名信息")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="enrollid", value="报名ID", required=true, paramType="query", dataType="int", defaultValue="0")
+	})
+	@PostMapping(value = "/deleteEnroll")
+	@ResponseBody
+	public Result<Object> deleteEnroll(@RequestParam Integer enrollid) {
+		enrollServiceImpl.deleteEnroll(enrollid);
+		return ResultUtil.success();
+	}
+	
 	@ApiOperation(value = "保存报名信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="pageNum", value="当前页码", required=true, paramType="query", dataType="int", defaultValue="0"),

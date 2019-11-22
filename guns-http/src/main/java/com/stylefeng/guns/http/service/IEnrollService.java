@@ -20,4 +20,8 @@ public interface IEnrollService extends IService<Enroll> {
 	void saveEnroll(Enroll enroll);
 
 	List<Enroll> getEnrollList(Page<Enroll> page, String state);
+
+	void deleteEnroll(Integer enrollid);
+
+	Enroll detailEnroll(Integer enrollid);
 }
