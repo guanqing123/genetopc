@@ -24,4 +24,6 @@ public interface IEnrollService extends IService<Enroll> {
 	void deleteEnroll(Integer enrollid);
 
 	Enroll detailEnroll(Integer enrollid);
+
+	void modifyEnroll(Enroll enroll);
 }

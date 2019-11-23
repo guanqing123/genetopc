@@ -46,8 +46,19 @@ public class EnrollController {
 	})
 	@PostMapping(value = "/saveEnroll")
 	@ResponseBody
-	public Result<Object> saveEnroll(Enroll enroll){
+	public Result<Object> saveEnroll(Enroll enroll) {
 		enrollServiceImpl.saveEnroll(enroll);
+		return ResultUtil.success();
+	}
+	
+	@ApiOperation(value = "修改报名信息")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="enroll", value="报名对象", required=true, paramType="query", dataType="int", defaultValue="0")
+	})
+	@PostMapping(value = "/modifyEnroll")
+	@ResponseBody
+	public Result<Object> modifyEnroll(Enroll enroll) {
+		enrollServiceImpl.modifyEnroll(enroll);
 		return ResultUtil.success();
 	}
 	
@@ -55,7 +66,7 @@ public class EnrollController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="enrollid", value="报名ID", required=true, paramType="query", dataType="int", defaultValue="0")
 	})
-	@PostMapping(value = "/detailEnroll")
+	@GetMapping(value = "/detailEnroll")
 	@ResponseBody
 	public Result<Object> detailEnroll(@RequestParam Integer enrollid) {
 		Enroll enroll = enrollServiceImpl.detailEnroll(enrollid);

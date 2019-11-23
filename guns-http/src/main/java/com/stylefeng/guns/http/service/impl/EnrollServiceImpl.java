@@ -3,6 +3,7 @@ package com.stylefeng.guns.http.service.impl;
 import com.stylefeng.guns.core.domain.FilePath;
 import com.stylefeng.guns.core.exception.FileUploadException;
 import com.stylefeng.guns.core.util.OssUtil;
+import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.http.model.Enroll;
 import com.stylefeng.guns.http.model.EnrollImage;
 import com.stylefeng.guns.http.persistence.EnrollImageMapper;
@@ -53,6 +54,31 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 			throw new FileUploadException(500, e.getMessage(), paths);
 		}
 	}
+	
+	@Transactional
+	@Override
+	public void modifyEnroll(Enroll enroll) {
+		// TODO Auto-generated method stub
+		List<FilePath> paths = null;
+		if (ToolUtil.isNotEmpty(enroll.getFiles())) {
+			paths = ossUtil.transferTo(enroll.getFiles());
+		}
+		try {
+			enroll.setState(0);
+			this.baseMapper.updateById(enroll);
+			if (ToolUtil.isNotEmpty(paths)) {
+				for (FilePath path : paths) {
+					EnrollImage image = new EnrollImage();
+					image.setEnrollid(enroll.getEnrollid());
+					image.setFileKey(path.getFileKey());
+					image.setFilePath(path.getFileRealPath());
+					enrollImageMapper.insert(image);
+				}
+			}
+		} catch (Exception e) {
+			throw new FileUploadException(500, e.getMessage(), paths);
+		}
+	}
 
 	@Override
 	public List<Enroll> getEnrollList(Page<Enroll> page, String state) {
@@ -74,6 +100,7 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 		});
 	}
 
+	@Transactional
 	@Override
 	public Enroll detailEnroll(Integer enrollid) {
 		// TODO Auto-generated method stub
