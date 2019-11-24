@@ -1,5 +1,6 @@
 package com.stylefeng.guns.http.service;
 
+import com.stylefeng.guns.core.domain.Result;
 import com.stylefeng.guns.http.model.Enroll;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IEnrollService extends IService<Enroll> {
 
-	void saveEnroll(Enroll enroll);
+	Result<Object> saveEnroll(Enroll enroll);
 
 	List<Enroll> getEnrollList(Page<Enroll> page, String state);
 

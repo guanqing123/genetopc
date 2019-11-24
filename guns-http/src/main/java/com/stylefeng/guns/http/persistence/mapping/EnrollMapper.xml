@@ -33,6 +33,7 @@
     		from gene_enroll a 
     		inner join gene_project b on a.projectid = b.projectid
 		where a.state = #{state}
+		order by a.enrollid desc
     </select>
     
     <select id="detailEnroll" resultMap="BaseResultMap">

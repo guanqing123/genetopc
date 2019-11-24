@@ -35,6 +35,11 @@ public class Enroll extends Model<Enroll> {
      */
     private Integer projectid;
     /**
+     * 验证码
+     */
+    @TableField(exist = false)
+    private String  icode;
+	/**
      * 项目名称
      */
     @TableField(exist = false)
@@ -130,6 +135,14 @@ public class Enroll extends Model<Enroll> {
     public void setProjectid(Integer projectid) {
         this.projectid = projectid;
     }
+    
+    public String getIcode() {
+		return icode;
+	}
+
+	public void setIcode(String icode) {
+		this.icode = icode;
+	}
     
     public String getXmmc() {
 		return xmmc;
@@ -285,6 +298,7 @@ public class Enroll extends Model<Enroll> {
         return "Enroll{" +
         "enrollid=" + enrollid +
         ", projectid=" + projectid +
+        ", icode=" + icode +
         ", name=" + name +
         ", telephone=" + telephone +
         ", sex=" + sex +

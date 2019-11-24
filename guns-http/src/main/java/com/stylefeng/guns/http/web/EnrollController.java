@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aliyuncs.exceptions.ClientException;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.domain.Result;
+import com.stylefeng.guns.core.util.OssUtil;
 import com.stylefeng.guns.core.util.ResultUtil;
+import com.stylefeng.guns.core.util.SmsUtil;
 import com.stylefeng.guns.http.core.factory.PageFactory;
 import com.stylefeng.guns.http.model.Enroll;
 import com.stylefeng.guns.http.service.IEnrollService;
@@ -40,6 +44,32 @@ public class EnrollController {
 	@Autowired
 	private IEnrollService enrollServiceImpl;
 	
+	@Autowired
+	private SmsUtil smsUtil;
+	
+	@ApiOperation(value = "获取验证码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="telephone", value="手机号", required=true, paramType="query", dataType="int", defaultValue="15888686888"),
+		@ApiImplicitParam(name="projectid", value="项目id", required=true, paramType="query", dataType="int", defaultValue="0")
+	})
+	@GetMapping(value = "/sendIcode")
+	@ResponseBody
+	public Result<Object> sendIcode(@RequestParam String telephone, @RequestParam Integer projectid) {
+		EntityWrapper<Enroll> wrapper = new EntityWrapper<>();
+		wrapper.eq("projectid", projectid)
+			.eq("telephone", telephone);
+		if (enrollServiceImpl.selectCount(wrapper) > 0)
+			return ResultUtil.failure(500, "同一个招募信息,同一个手机只能报一次名");
+		try {
+			smsUtil.sendDySms(telephone, "SMS_177252093", "{\"code\":\""+smsUtil.getSaveIcode(telephone)+"\"}", null);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResultUtil.failure(500, e.getMessage());
+		}
+		return ResultUtil.success();
+	}
+	
 	@ApiOperation(value = "保存报名信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="enroll", value="报名对象", required=true, paramType="query", dataType="int", defaultValue="0")
@@ -47,8 +77,7 @@ public class EnrollController {
 	@PostMapping(value = "/saveEnroll")
 	@ResponseBody
 	public Result<Object> saveEnroll(Enroll enroll) {
-		enrollServiceImpl.saveEnroll(enroll);
-		return ResultUtil.success();
+		return enrollServiceImpl.saveEnroll(enroll);
 	}
 	
 	@ApiOperation(value = "修改报名信息")

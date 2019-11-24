@@ -1,6 +1,7 @@
 package com.stylefeng.guns.core.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,9 @@ public class SmsUtil {
     static final String accessKeyId = "LTAI4FiETqrBJp8ykbM71qPQ";
     static final String accessKeySecret = "Fnm6YNr76TUooWRhwLwKAJrRKTzro7";
     static final String sign = "京拓柯林";
+    
+    @Autowired
+    private RedisUtil redisUtil;
     
     public SendSmsResponse sendDySms(String telephone, String templateCode, String templateParam, String outId) throws ClientException {
         //可自助调整超时时间
@@ -60,28 +64,14 @@ public class SmsUtil {
     }
 	
 	@Cacheable(value = "identifyCode", key = "#root.methodName+'.'+#telephone")
-	public String getRegisterIcode(String telephone){
+	public String getSaveIcode(String telephone){
 		return ToolUtil.getRandom();
 	}
 	
-	@CacheEvict(value = "identifyCode", key = "'getRegisterIcode'+'.'+#telephone")
-	public void flushRegisterIcode(String telephone) {}
+	@CacheEvict(value = "identifyCode", key = "'getSaveIcode'+'.'+#telephone")
+	public void flushSaveIcode(String telephone) {}
 	
-	
-	@Cacheable(value = "identifyCode", key = "#root.methodName+'.'+#telephone")
-	public String getLoginIcode(String telephone) {
-		return ToolUtil.getRandom();
+	public Object getRedisSaveIcode(String telephone) {
+		return redisUtil.get("getSaveIcode." + telephone);
 	}
-	
-	@CacheEvict(value = "identifyCode", key = "'getLoginIcode'+'.'+#telephone")
-	public void flushLoginIcode(String telephone) {}
-	
-	
-	@Cacheable(value = "identifyCode", key = "#root.methodName+'.'+#telephone")
-	public String getModifyIcode(String telephone) {
-		return ToolUtil.getRandom();
-	}
-	
-	@CacheEvict(value = "identifyCode", key = "'getModifyIcode'+'.'+#telephone")
-	public void flushModifyIcode(String telephone) {}
 }

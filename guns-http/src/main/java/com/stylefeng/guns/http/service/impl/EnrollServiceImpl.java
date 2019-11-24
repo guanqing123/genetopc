@@ -1,8 +1,11 @@
 package com.stylefeng.guns.http.service.impl;
 
 import com.stylefeng.guns.core.domain.FilePath;
+import com.stylefeng.guns.core.domain.Result;
 import com.stylefeng.guns.core.exception.FileUploadException;
 import com.stylefeng.guns.core.util.OssUtil;
+import com.stylefeng.guns.core.util.ResultUtil;
+import com.stylefeng.guns.core.util.SmsUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.http.model.Enroll;
 import com.stylefeng.guns.http.model.EnrollImage;
@@ -36,22 +39,32 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 	@Autowired
 	private EnrollImageMapper enrollImageMapper;
 	
+	@Autowired
+	private SmsUtil smsUtil;
+	
 	@Transactional
 	@Override
-	public void saveEnroll(Enroll enroll) {
+	public Result<Object> saveEnroll(Enroll enroll) {
 		// TODO Auto-generated method stub
-		List<FilePath> paths = ossUtil.transferTo(enroll.getFiles());
-		try {
-			this.insert(enroll);
-			for (FilePath path : paths) {
-				EnrollImage image = new EnrollImage();
-				image.setEnrollid(enroll.getEnrollid());
-				image.setFileKey(path.getFileKey());
-				image.setFilePath(path.getFileRealPath());
-				enrollImageMapper.insert(image);
+		Object icode = smsUtil.getRedisSaveIcode(enroll.getTelephone());
+		if (ToolUtil.isNotEmpty(icode) && icode.equals(enroll.getIcode())) {
+			List<FilePath> paths = ossUtil.transferTo(enroll.getFiles());
+			try {
+				this.insert(enroll);
+				for (FilePath path : paths) {
+					EnrollImage image = new EnrollImage();
+					image.setEnrollid(enroll.getEnrollid());
+					image.setFileKey(path.getFileKey());
+					image.setFilePath(path.getFileRealPath());
+					enrollImageMapper.insert(image);
+				}
+				smsUtil.flushSaveIcode(enroll.getTelephone());
+				return ResultUtil.success();
+			} catch (Exception e) {
+				throw new FileUploadException(500, e.getMessage(), paths);
 			}
-		} catch (Exception e) {
-			throw new FileUploadException(500, e.getMessage(), paths);
+		} else {
+			return ResultUtil.failure(500, "验证码错误");
 		}
 	}
 	
