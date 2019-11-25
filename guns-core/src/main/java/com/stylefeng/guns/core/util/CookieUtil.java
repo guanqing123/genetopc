@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 * create by guanqing
 * 2019年11月25日 下午6:16:58
 */
-public class CookiesUtil {
+public class CookieUtil {
 
 	/**
 	 * 删除 openId
 	 * @param response
 	 */
-	public static void removeCookieOpenId(String cookieName,HttpServletResponse response) {
+	public static void removeCookie(String cookieName,HttpServletResponse response) {
 		addCookie(cookieName, null, 0, response);
 	}
 

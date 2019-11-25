@@ -1,5 +1,8 @@
 package com.stylefeng.guns.http.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.stylefeng.guns.core.domain.Result;
-import com.stylefeng.guns.core.util.CookiesUtil;
+import com.stylefeng.guns.core.util.CookieUtil;
 import com.stylefeng.guns.core.util.ResultUtil;
+import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.http.core.weixin.WxApi;
 import com.stylefeng.guns.http.core.weixin.constant.WxConstant;
+import com.stylefeng.guns.http.core.weixin.tool.ResultCheck;
 import com.stylefeng.guns.http.core.weixin.wxobj.OAuth2AccessToken;
+import com.stylefeng.guns.http.core.weixin.wxobj.OpenUser;
 
 @Controller
 public class WeixinController {
@@ -30,10 +36,37 @@ public class WeixinController {
 	@GetMapping("/getWxOpenId")
 	public String getWxOpenId(String code, String toUrl,HttpServletResponse response) {
 		System.out.println("code>" + code +"\t toUrl>"+ toUrl);
-//		OAuth2AccessToken auth2AccessToken = wxApi.getOAuth2AccessToken(code);
+		String openId = null;
+		OAuth2AccessToken auth2AccessToken = wxApi.getOAuth2AccessToken(code);
 		
-		CookiesUtil.addCookie(WxConstant.OPEN_ID, code, WxConstant.OPEN_ID_LIVE_TIME, response);
+		if (ResultCheck.isSuccess(auth2AccessToken))
+			openId = auth2AccessToken.getOpenId();
+		
+		if (ToolUtil.isNotEmpty(openId))
+			CookieUtil.addCookie(WxConstant.OPEN_ID, openId, WxConstant.OPEN_ID_LIVE_TIME, response);
+		
+		OpenUser openUser = null;
+		if (ToolUtil.isNotEmpty(openId))
+			openUser = wxApi.getUserInfo(openId);
+		
+		if (ToolUtil.isNotEmpty(openUser)) {
+			try {
+				CookieUtil.addCookie(WxConstant.NICK_NAME, URLEncoder.encode(openUser.getNickName(), "UTF-8"), WxConstant.NICK_NAME_LIVE_TIME, response);
+				CookieUtil.addCookie(WxConstant.HEAD_URL, URLEncoder.encode(openUser.getHeadImgUrl(), "UTF-8"), WxConstant.HEAD_URL_LIVE_TIME, response);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		return "redirect:" + toUrl;
+	}
+	
+	@GetMapping("/flushWxOpenId")
+	public Result<Object> flushWxOpenId(HttpServletResponse response) {
+		CookieUtil.removeCookie(WxConstant.OPEN_ID, response);
+		CookieUtil.removeCookie(WxConstant.NICK_NAME, response);
+		CookieUtil.removeCookie(WxConstant.HEAD_URL, response);
+		return ResultUtil.success();
 	}
 }
