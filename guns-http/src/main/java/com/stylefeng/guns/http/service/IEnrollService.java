@@ -20,7 +20,7 @@ public interface IEnrollService extends IService<Enroll> {
 
 	Result<Object> saveEnroll(Enroll enroll);
 
-	List<Enroll> getEnrollList(Page<Enroll> page, String state);
+	List<Enroll> getEnrollList(Page<Enroll> page, String openId, String state);
 
 	void deleteEnroll(Integer enrollid);
 

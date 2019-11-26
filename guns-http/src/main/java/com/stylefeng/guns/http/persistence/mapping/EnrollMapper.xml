@@ -32,7 +32,7 @@
     	select a.enrollid,a.projectid,b.xmmc,b.slt_path,a.`name`,a.telephone,a.sex,a.age,a.disease,a.province,a.city,a.district,a.detail_address,a.`comment`,a.create_date,a.check_comment,a.check_date 
     		from gene_enroll a 
     		inner join gene_project b on a.projectid = b.projectid
-		where a.state = #{state}
+		where a.state = #{state} and a.openid = #{openId}
 		order by a.enrollid desc
     </select>
     

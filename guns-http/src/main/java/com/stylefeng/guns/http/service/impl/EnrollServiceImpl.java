@@ -94,9 +94,9 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 	}
 
 	@Override
-	public List<Enroll> getEnrollList(Page<Enroll> page, String state) {
+	public List<Enroll> getEnrollList(Page<Enroll> page, String openId, String state) {
 		// TODO Auto-generated method stub
-		return this.baseMapper.getEnrollList(page, state);
+		return this.baseMapper.getEnrollList(page, openId, state);
 	}
 
 	@Transactional

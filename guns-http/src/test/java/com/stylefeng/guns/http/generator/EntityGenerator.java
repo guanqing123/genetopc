@@ -59,7 +59,7 @@ public class EntityGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setTablePrefix(new String[]{"gene"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"gene_enroll_image"});
+        strategy.setInclude(new String[]{"gene_user"});
         mpg.setStrategy(strategy);
 
         // 包配置

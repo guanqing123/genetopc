@@ -1,8 +1,12 @@
 package com.stylefeng.guns.http.web;
 
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,9 +15,9 @@ import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.domain.Result;
-import com.stylefeng.guns.core.util.OssUtil;
 import com.stylefeng.guns.core.util.ResultUtil;
 import com.stylefeng.guns.core.util.SmsUtil;
+import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.http.core.factory.PageFactory;
 import com.stylefeng.guns.http.model.Enroll;
 import com.stylefeng.guns.http.service.IEnrollService;
@@ -22,11 +26,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -76,7 +75,10 @@ public class EnrollController {
 	})
 	@PostMapping(value = "/saveEnroll")
 	@ResponseBody
-	public Result<Object> saveEnroll(Enroll enroll) {
+	public Result<Object> saveEnroll(@RequestHeader("openId") String openId, Enroll enroll) {
+		if (ToolUtil.isEmpty(openId))
+			return ResultUtil.failure(500, "微信ID不能为空");
+		enroll.setOpenid(openId);
 		return enrollServiceImpl.saveEnroll(enroll);
 	}
 	
@@ -121,9 +123,9 @@ public class EnrollController {
 	})
 	@GetMapping(value = "/getEnrollList")
 	@ResponseBody
-	public Result<Object> getEnrollList(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam String state) {
+	public Result<Object> getEnrollList(@RequestHeader("openId") String openId, @RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam String state) {
 		Page<Enroll> page = new PageFactory<Enroll>().defaultPage();
-		List<Enroll> list = enrollServiceImpl.getEnrollList(page, state);
+		List<Enroll> list = enrollServiceImpl.getEnrollList(page, openId, state);
 		page.setRecords(list);
 		return ResultUtil.success(page);
 	}

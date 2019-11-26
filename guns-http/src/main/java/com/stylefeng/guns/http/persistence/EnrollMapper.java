@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 @Mapper
 public interface EnrollMapper extends BaseMapper<Enroll> {
 
-	List<Enroll> getEnrollList(Page<Enroll> page,@Param("state") String state);
+	List<Enroll> getEnrollList(Page<Enroll> page,@Param("openId") String openId,@Param("state") String state);
 
 	Enroll detailEnroll(@Param("enrollid") Integer enrollid);
 }

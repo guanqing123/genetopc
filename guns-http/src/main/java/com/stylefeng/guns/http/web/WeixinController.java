@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,18 @@ import com.stylefeng.guns.http.core.weixin.constant.WxConstant;
 import com.stylefeng.guns.http.core.weixin.tool.ResultCheck;
 import com.stylefeng.guns.http.core.weixin.wxobj.OAuth2AccessToken;
 import com.stylefeng.guns.http.core.weixin.wxobj.OpenUser;
+import com.stylefeng.guns.http.model.User;
+import com.stylefeng.guns.http.service.IUserService;
+import com.stylefeng.guns.http.service.impl.UserServiceImpl;
 
 @Controller
 public class WeixinController {
 
 	@Autowired
 	private WxApi wxApi;
+	
+	@Autowired
+	private IUserService userServiceImpl;
 	
 	@RequestMapping("/")
 	@ResponseBody
@@ -50,6 +57,9 @@ public class WeixinController {
 			openUser = wxApi.getUserInfo(openId);
 		
 		if (ToolUtil.isNotEmpty(openUser)) {
+			User user = new User();
+			BeanUtils.copyProperties(openUser, user);
+			userServiceImpl.insertOrUpdate(user);
 			try {
 				CookieUtil.addCookie(WxConstant.NICK_NAME, URLEncoder.encode(openUser.getNickName(), "UTF-8"), WxConstant.NICK_NAME_LIVE_TIME, response);
 				CookieUtil.addCookie(WxConstant.HEAD_URL, URLEncoder.encode(openUser.getHeadImgUrl(), "UTF-8"), WxConstant.HEAD_URL_LIVE_TIME, response);
