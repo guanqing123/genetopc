@@ -1,5 +1,16 @@
 package com.stylefeng.guns.http.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.core.domain.FilePath;
 import com.stylefeng.guns.core.domain.Result;
 import com.stylefeng.guns.core.exception.FileUploadException;
@@ -7,20 +18,13 @@ import com.stylefeng.guns.core.util.OssUtil;
 import com.stylefeng.guns.core.util.ResultUtil;
 import com.stylefeng.guns.core.util.SmsUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.http.core.schedule.ScheduleManager;
+import com.stylefeng.guns.http.core.schedule.ScheduleTaskFactory;
 import com.stylefeng.guns.http.model.Enroll;
 import com.stylefeng.guns.http.model.EnrollImage;
 import com.stylefeng.guns.http.persistence.EnrollImageMapper;
 import com.stylefeng.guns.http.persistence.EnrollMapper;
 import com.stylefeng.guns.http.service.IEnrollService;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -59,6 +63,8 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 					enrollImageMapper.insert(image);
 				}
 				smsUtil.flushSaveIcode(enroll.getTelephone());
+				String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+				ScheduleManager.me().executeLog(ScheduleTaskFactory.sendNewAppointmentReminder(enroll.getOpenid(), enroll.getProjectid(), currentDate));
 				return ResultUtil.success();
 			} catch (Exception e) {
 				throw new FileUploadException(500, e.getMessage(), paths);

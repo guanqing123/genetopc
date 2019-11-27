@@ -11,6 +11,7 @@ import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.util.RedisUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.http.core.weixin.env.WxProperties;
+import com.stylefeng.guns.http.core.weixin.templateMsg.WechatTemplate;
 import com.stylefeng.guns.http.core.weixin.tool.ResultCheck;
 import com.stylefeng.guns.http.core.weixin.wxobj.AccessToken;
 import com.stylefeng.guns.http.core.weixin.wxobj.OAuth2AccessToken;
@@ -83,5 +84,14 @@ public class WxApi {
 		// TODO Auto-generated method stub
 		String userUrl = MessageFormat.format(wxProperties.getApiUrl().getUserInfoUrl(), accessToken().getAccessToken(), openId);
 		return restTemplate.getForObject(userUrl, OpenUser.class);
+	}
+	
+	/**
+	 * 发送模板消息
+	 * @return
+	 */
+	public <T> T sendTemplateMessage(WechatTemplate template, Class<T> c) {
+		String templateMsgUrl = MessageFormat.format(wxProperties.getApiUrl().getSendTemplateMsgUrl(), accessToken().getAccessToken());
+		return restTemplate.postForObject(templateMsgUrl, template, c);
 	}
 }

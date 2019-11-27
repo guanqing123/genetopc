@@ -30,5 +30,7 @@ public class WxProperties {
         private String authAccessTokenUrl;
         //获取用户信息
         private String userInfoUrl;
-	}	
+        //发送模板消息
+        private String sendTemplateMsgUrl;
+	}
 }

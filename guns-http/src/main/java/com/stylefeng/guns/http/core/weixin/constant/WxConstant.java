@@ -19,4 +19,7 @@ public class WxConstant {
     public static final String HEAD_URL = "head_url";
     //headUrl30天后过期
     public static final int HEAD_URL_LIVE_TIME = 60*60*24*30;
+    
+    //新预约提醒
+    public static final String TEMPLATE_NEW_APPOINTMENT_REMINDER = "M_XJHgZ6S_mNiBoshlVZYi1eh5d3zCi0vpKML3SvU_w";
 }

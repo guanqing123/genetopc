@@ -23,7 +23,6 @@ import com.stylefeng.guns.http.core.weixin.wxobj.OAuth2AccessToken;
 import com.stylefeng.guns.http.core.weixin.wxobj.OpenUser;
 import com.stylefeng.guns.http.model.User;
 import com.stylefeng.guns.http.service.IUserService;
-import com.stylefeng.guns.http.service.impl.UserServiceImpl;
 
 @Controller
 public class WeixinController {
