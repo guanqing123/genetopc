@@ -4,6 +4,13 @@
 var ProjectCityDlg = {
 	projectCityData : {},
 	validateFields : {
+		provinceName : {
+			validators: {
+				notEmpty: {
+					message: '省不能为空'
+				}
+			}
+		},
 		cityName : {
     		validators: {
                 notEmpty: {
@@ -52,6 +59,7 @@ ProjectCityDlg.clearData = function() {
 ProjectCityDlg.collectData = function() {
 	this
 	.set('projectid')
+	.set('provinceName')
 	.set('cityName')
 	.set('person')
 	.set('phone');

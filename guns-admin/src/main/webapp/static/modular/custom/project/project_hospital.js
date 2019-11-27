@@ -16,6 +16,12 @@ ProjectCityDlg.initColumn = function() {
 		{field: 'selectItem', radio: true},
         {title: '主键', field: 'cityid', visible: false, align: 'center', valign: 'middle'},
         {
+        	title: '省', field: 'provinceName', bisible: true, align: 'center', valign: 'middle',
+        	formatter: function (value, row, index) {
+        		return '<a href="#" id="province_name_'+row.cityid+'">'+ value +'</a>'
+        	}
+        },
+        {
         	title: '城市', field: 'cityName', visible: true, align: 'center', valign: 'middle',
             formatter: function (value, row, index) {
                 //return '<a href="#" class="cityName" data-name="cityName" data-type="text" data-pk="'+row.cityid+'" data-url="/project/modifyCity" data-title="输入城市">'+value+'</a>';
@@ -33,7 +39,7 @@ ProjectCityDlg.initColumn = function() {
         	formatter: function(value, row, index) {
 				return '<a href="#" id="phone_'+row.cityid+'">'+ value +'</a>'
 			}
-        },
+        }/*,
         {
         	title: '操作', field: 'operate', visible: true, align: 'center', valign: 'middle',
         	formatter: function(value, row, index) {
@@ -42,21 +48,21 @@ ProjectCityDlg.initColumn = function() {
 				].join('');
 			},
 			events: 'operateCity'
-        }
+        }*/
 	];
 }
 
 /**
  * 操作
  */
-window.operateCity = {
+/*window.operateCity = {
 	'click .addhospital': function(e, value, row, index) {
 		e.stopPropagation();
 		$('#cityid').val(row.cityid);
 		$('#cityName').val(row.cityName + '的医院');
 		ProjectCityHospitalDlg.table.refresh({query: {'projectid' : $('#projectid').val(), 'cityid' : $('#cityid').val()}});
 	}
-}
+}*/
 
 /**
  * 修改城市
@@ -241,6 +247,7 @@ $(function () {
 	var defaultColunms = ProjectCityDlg.initColumn();
     var table = new BSTable(ProjectCityDlg.id, "/project/cityList", defaultColunms, function(data) {
     	$.each(data, function(i, v){
+    		ProjectCityDlg.modifyCity('province_name', v.cityid, '省必填');
     		ProjectCityDlg.modifyCity('city_name', v.cityid, '城市必填');
     		ProjectCityDlg.modifyCity('person', v.cityid, '联系人必填');
     		ProjectCityDlg.modifyCity('phone', v.cityid, '联系电话必填');

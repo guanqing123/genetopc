@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.custom.dao.BaseCityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.custom.model.BaseCity">
+        <result column="cityid" property="cityid" />
+        <result column="city_name" property="cityName" />
+        <result column="province_name" property="provinceName" />
+        <result column="person" property="person" />
+        <result column="phone" property="phone" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cityid, city_name AS cityName, province_name AS provinceName, person, phone, create_date AS createDate
+    </sql>
+
+	<select id="getBaseCityListByCondition" resultMap="BaseResultMap">
+		select * from gene_base_city where 1=1
+		<if test="null!=condition and condition!=''">
+			and (city_name like concat('%',#{condition},'%') or province_name like concat('%',#{condition},'%'))
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,29 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="baseCityForm">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+			        <#input id="provinceName" name="省" underline="true"/>
+                    <#input id="person" name="联系人" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+			        <#input id="cityName" name="城市" underline="true"/>
+                    <#input id="phone" name="联系电话" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="BaseCityInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="BaseCityInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/custom/baseCity/baseCity_info.js"></script>
+@}

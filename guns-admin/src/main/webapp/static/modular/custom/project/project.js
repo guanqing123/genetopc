@@ -185,7 +185,7 @@ Project.openProjectHospital = function() {
 	if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '开展医院',
+            title: Project.seItem.xmmc+' > '+'开展医院',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: false,

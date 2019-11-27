@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.custom.model.ProjectCity">
         <id column="cityid" property="cityid" />
         <result column="projectid" property="projectid" />
+        <result column="province_name" property="provinceName" />
         <result column="city_name" property="cityName" />
         <result column="person" property="person" />
         <result column="phone" property="phone" />
@@ -13,7 +14,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        cityid, projectid, city_name AS cityName, person, phone
+        cityid, projectid, city_name AS cityName, province_name AS provinceName, person, phone
     </sql>
     
     <select id="getCityListByProjectid" resultMap="BaseResultMap">
