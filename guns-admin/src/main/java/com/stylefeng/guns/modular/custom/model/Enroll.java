@@ -29,6 +29,10 @@ public class Enroll extends Model<Enroll> {
     @TableId(value = "enrollid", type = IdType.AUTO)
     private Integer enrollid;
     /**
+     * openid
+     */
+    private String openid;
+	/**
      * 项目id
      */
     private Integer projectid;
@@ -111,6 +115,14 @@ public class Enroll extends Model<Enroll> {
         this.enrollid = enrollid;
     }
 
+    public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+    
     public Integer getProjectid() {
         return projectid;
     }
@@ -256,6 +268,7 @@ public class Enroll extends Model<Enroll> {
     public String toString() {
         return "Enroll{" +
         "enrollid=" + enrollid +
+        ", openid=" + openid +
         ", projectid=" + projectid +
         ", xmmc=" + xmmc +
         ", name=" + name +

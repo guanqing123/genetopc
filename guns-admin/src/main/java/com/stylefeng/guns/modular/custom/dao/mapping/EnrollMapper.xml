@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.custom.model.Enroll">
         <id column="enrollid" property="enrollid" />
         <result column="projectid" property="projectid" />
+        <result column="openid" property="openid" />
         <result column="xmmc" property="xmmc" />
         <result column="name" property="name" />
         <result column="telephone" property="telephone" />
@@ -51,7 +52,7 @@
     </select>
 
 	<select id="enrollDetailById" resultMap="BaseResultMap">
-		select a.enrollid, a.projectid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date, a.check_comment, a.check_date, c.imageid, c.enrollid image_enrollid, c.file_key, c.file_path, c.create_date image_create_date 
+		select a.enrollid, a.projectid, a.openid, b.xmmc, a.`name`, a.telephone, a.sex, a.age, a.disease, a.province, a.city, a.district, a.detail_address, a.`comment`, a.state, a.create_date, a.check_comment, a.check_date, c.imageid, c.enrollid image_enrollid, c.file_key, c.file_path, c.create_date image_create_date 
 			from gene_enroll a 
 			inner join gene_project b on a.projectid=b.projectid
 			left join gene_enroll_image c on a.enrollid=c.enrollid

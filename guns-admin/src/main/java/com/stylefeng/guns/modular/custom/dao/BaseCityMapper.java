@@ -4,6 +4,8 @@ import com.stylefeng.guns.modular.custom.model.BaseCity;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -17,5 +19,5 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 public interface BaseCityMapper extends BaseMapper<BaseCity> {
 
-	List<BaseCity> getBaseCityListByCondition(Page<BaseCity> page, String condition);
+	List<BaseCity> getBaseCityListByCondition(Page<BaseCity> page,@Param("condition") String condition);
 }

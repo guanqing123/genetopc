@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.custom.dao.BaseCityHospitalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.custom.model.BaseCityHospital">
+        <id column="hospitalid" property="hospitalid" />
+        <result column="cityid" property="cityid" />
+        <result column="hospital_name" property="hospitalName" />
+        <result column="department_name" property="departmentName" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        hospitalid, cityid, hospital_name AS hospitalName, department_name AS departmentName, create_date AS createDate
+    </sql>
+
+	<select id="getBaseCityHospitalListByCondition" resultMap="BaseResultMap">
+		select * from gene_base_city_hospital where cityid = #{baseCityId}
+		<if test="null!=condition and condition!=''">
+			and hospital_name like concat('%',#{condition},'%')
+		</if>
+	</select>
+
+</mapper>

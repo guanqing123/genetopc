@@ -64,7 +64,7 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 				}
 				smsUtil.flushSaveIcode(enroll.getTelephone());
 				String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-				ScheduleManager.me().executeLog(ScheduleTaskFactory.sendNewAppointmentReminder(enroll.getOpenid(), enroll.getProjectid(), currentDate));
+				ScheduleManager.me().executeTask(ScheduleTaskFactory.sendNewAppointmentReminder(enroll.getOpenid(), enroll.getProjectid(), currentDate));
 				return ResultUtil.success();
 			} catch (Exception e) {
 				throw new FileUploadException(500, e.getMessage(), paths);

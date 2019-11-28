@@ -1,5 +1,5 @@
 /**
- * 城市列表管理初始化
+ * 城市管理初始化
  */
 var BaseCity = {
     id: "BaseCityTable",	//表格id
@@ -38,12 +38,12 @@ BaseCity.check = function () {
 };
 
 /**
- * 点击添加城市列表
+ * 点击添加城市
  */
 BaseCity.openAddBaseCity = function () {
     var index = layer.open({
         type: 2,
-        title: '添加城市列表',
+        title: '添加城市',
         area: ['800px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
@@ -53,13 +53,13 @@ BaseCity.openAddBaseCity = function () {
 };
 
 /**
- * 打开查看城市列表详情
+ * 打开查看城市详情
  */
 BaseCity.openBaseCityDetail = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '城市列表详情',
+            title: '城市详情',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
@@ -70,23 +70,44 @@ BaseCity.openBaseCityDetail = function () {
 };
 
 /**
- * 删除城市列表
+ * 打开医院列表
+ */
+BaseCity.openBaseCityHospital = function() {
+	if (this.check()) {
+		var index = layer.open({
+			type: 2,
+			title: BaseCity.seItem.cityName + ' > 医院列表',
+			area: ['800px', '420px'], //宽高
+			fix: false, //不固定
+			maxmin: true,
+			content: Feng.ctxPath + '/baseCity/baseCity_hospital/' + BaseCity.seItem.cityid
+		});
+		this.layerIndex = index;
+		layer.full(index)
+	}
+}
+
+/**
+ * 删除城市
  */
 BaseCity.delete = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/baseCity/delete", function (data) {
-            Feng.success("删除成功!");
-            BaseCity.table.refresh();
-        }, function (data) {
-            Feng.error("删除失败!" + data.responseJSON.message + "!");
-        });
-        ajax.set("baseCityId",this.seItem.id);
-        ajax.start();
+		layer.confirm('删除城市,将同步删除城市下的医院!', {icon: 3, title:'提示'}, function(index){
+	        var ajax = new $ax(Feng.ctxPath + "/baseCity/delete", function (data) {
+	            Feng.success("删除成功!");
+	            BaseCity.table.refresh();
+	            layer.close(index);
+	        }, function (data) {
+	            Feng.error("删除失败!" + data.responseJSON.message + "!");
+	        });
+	        ajax.set("baseCityId",BaseCity.seItem.cityid);
+	        ajax.start();
+		});
     }
 };
 
 /**
- * 查询城市列表列表
+ * 查询城市列表
  */
 BaseCity.search = function () {
     var queryData = {};

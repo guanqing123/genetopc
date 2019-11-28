@@ -3,11 +3,15 @@ package com.stylefeng.guns.modular.custom.service.impl;
 import com.stylefeng.guns.modular.custom.model.DownloadEnroll;
 import com.stylefeng.guns.modular.custom.model.Enroll;
 import com.stylefeng.guns.modular.custom.model.ImageData;
+import com.stylefeng.guns.core.enums.EnrollState;
+import com.stylefeng.guns.core.log.LogManager;
+import com.stylefeng.guns.core.log.factory.LogTaskFactory;
 import com.stylefeng.guns.modular.custom.dao.EnrollMapper;
 import com.stylefeng.guns.modular.custom.service.IEnrollService;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -39,6 +43,18 @@ public class EnrollServiceImpl extends ServiceImpl<EnrollMapper, Enroll> impleme
 	public void check(Integer enrollId, String checkState, String checkComment) {
 		// TODO Auto-generated method stub
 		this.baseMapper.check(enrollId, checkState, checkComment);
+		Enroll enroll = this.baseMapper.enrollDetailById(enrollId);
+		String checkdate = new SimpleDateFormat("yyyy-MM-dd").format(enroll.getCheckDate());
+		switch (EnrollState.getEnrollState(checkState)) {
+		case pass:
+			LogManager.me().executeLog(LogTaskFactory.sendEnrollPass(enroll.getOpenid(), enroll.getXmmc(), checkdate, enroll.getName()));
+			break;
+		case refuse:
+			LogManager.me().executeLog(LogTaskFactory.sendEnrollRefuse(enroll.getOpenid(), enroll.getXmmc(), checkdate, enroll.getName()));
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override

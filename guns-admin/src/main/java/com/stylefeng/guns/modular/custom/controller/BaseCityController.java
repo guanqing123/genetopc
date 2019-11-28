@@ -1,27 +1,27 @@
 package com.stylefeng.guns.modular.custom.controller;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.stylefeng.guns.core.base.controller.BaseController;
-import com.stylefeng.guns.core.common.constant.factory.PageFactory;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.stylefeng.guns.core.log.LogObjectHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.baomidou.mybatisplus.plugins.Page;
+import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.modular.custom.model.BaseCity;
+import com.stylefeng.guns.modular.custom.model.BaseCityHospital;
+import com.stylefeng.guns.modular.custom.service.IBaseCityHospitalService;
 import com.stylefeng.guns.modular.custom.service.IBaseCityService;
 
 /**
  * 城市列表控制器
  *
- * @author fengshuonan
+ * @author guanqing
  * @Date 2019-11-27 21:22:49
  */
 @Controller
@@ -32,6 +32,9 @@ public class BaseCityController extends BaseController {
 
     @Autowired
     private IBaseCityService baseCityService;
+    
+    @Autowired
+    private IBaseCityHospitalService baseCityHospitalService;
 
     /**
      * 跳转到城市列表首页
@@ -42,7 +45,7 @@ public class BaseCityController extends BaseController {
     }
 
     /**
-     * 跳转到添加城市列表
+     * 跳转到添加城市
      */
     @RequestMapping("/baseCity_add")
     public String baseCityAdd() {
@@ -50,7 +53,7 @@ public class BaseCityController extends BaseController {
     }
 
     /**
-     * 跳转到修改城市列表
+     * 跳转到修改城市
      */
     @RequestMapping("/baseCity_update/{baseCityId}")
     public String baseCityUpdate(@PathVariable Integer baseCityId, Model model) {
@@ -58,9 +61,89 @@ public class BaseCityController extends BaseController {
         model.addAttribute("item",baseCity);
         return PREFIX + "baseCity_edit.html";
     }
+    
+    /**
+     * 跳转到医院列表
+     * @return
+     */
+    @RequestMapping("/baseCity_hospital/{baseCityId}")
+    public String baseCityHospital(@PathVariable Integer baseCityId, Model model) {
+    	model.addAttribute("baseCityId", baseCityId);
+    	return PREFIX + "baseCity_hospital.html";
+    }
+    
+    /**
+     * 跳转到添加医院页面
+     * @return
+     */
+    @RequestMapping("/baseCity_hospitalAdd/{baseCityId}")
+    public String baseCityHospitalAdd(@PathVariable Integer baseCityId, Model model) {
+    	model.addAttribute("baseCityId", baseCityId);
+    	return PREFIX + "baseCity_hospitalAdd.html";
+    }
+    
+    /**
+     * 跳转到编辑医院页面
+     * @return
+     */
+    @RequestMapping("/baseCity_hospitalUpdate/{hospitalid}")
+    public String baseCityHospitalUpdate(@PathVariable Integer hospitalid, Model model) {
+    	BaseCityHospital hospital = baseCityHospitalService.selectById(hospitalid);
+    	model.addAttribute("hospital", hospital);
+    	return PREFIX + "baseCity_hospitalEdit.html";
+    }
+    
+    /**
+     * 添加医院
+     * @param baseCityHospital
+     * @return
+     */
+    @RequestMapping(value = "/hospital/add")
+    @ResponseBody
+    public Object hospitalAdd(BaseCityHospital baseCityHospital) {
+    	baseCityHospitalService.insert(baseCityHospital);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 编辑医院
+     * @param baseCityHospital
+     * @return
+     */
+    @RequestMapping(value = "/hospital/update")
+    @ResponseBody
+    public Object hospitalUpdate(BaseCityHospital baseCityHospital) {
+    	baseCityHospitalService.updateById(baseCityHospital);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 删除医院
+     * @param hospitalId
+     * @return
+     */
+    @RequestMapping(value = "/hospital/delete")
+    @ResponseBody
+    public Object hospitalDelete(@RequestParam Integer hospitalId) {
+    	baseCityHospitalService.deleteById(hospitalId);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
+     * 获取医院列表
+     * @return
+     */
+    @RequestMapping(value = "/hospital/list")
+    @ResponseBody
+    public Object hospitalList(Integer baseCityId, String condition) {
+    	Page<BaseCityHospital> page = new PageFactory<BaseCityHospital>().defaultPage();
+    	List<BaseCityHospital> result = baseCityHospitalService.getBaseCityHospitalListByCondition(page, baseCityId, condition);
+    	page.setRecords(result);
+    	return super.packForBT(page);
+    }
 
     /**
-     * 获取城市列表列表
+     * 获取城市列表
      */
     @RequestMapping(value = "/list")
     @ResponseBody
@@ -87,7 +170,7 @@ public class BaseCityController extends BaseController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Object delete(@RequestParam Integer baseCityId) {
-        baseCityService.deleteById(baseCityId);
+        baseCityService.deleteCityAndHospitals(baseCityId);
         return SUCCESS_TIP;
     }
 

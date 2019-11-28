@@ -19,4 +19,5 @@ public interface IBaseCityService extends IService<BaseCity> {
 
 	List<BaseCity> getBaseCityListByCondition(Page<BaseCity> page, String condition);
 
+	void deleteCityAndHospitals(Integer baseCityId);
 }

@@ -8,10 +8,14 @@ import com.stylefeng.guns.modular.system.model.LoginLog;
 import com.stylefeng.guns.modular.system.model.OperationLog;
 import com.stylefeng.guns.core.db.Db;
 import com.stylefeng.guns.core.log.LogManager;
+import com.stylefeng.guns.core.util.SpringContextHolder;
 import com.stylefeng.guns.core.util.ToolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
+import java.text.MessageFormat;
 import java.util.TimerTask;
 
 /**
@@ -25,6 +29,7 @@ public class LogTaskFactory {
     private static Logger logger = LoggerFactory.getLogger(LogManager.class);
     private static LoginLogMapper loginLogMapper = Db.getMapper(LoginLogMapper.class);
     private static OperationLogMapper operationLogMapper = Db.getMapper(OperationLogMapper.class);
+    private static RestTemplate restTemplate = SpringContextHolder.getBean(RestTemplate.class);
 
     public static TimerTask loginLog(final Integer userId, final String ip) {
         return new TimerTask() {
@@ -99,4 +104,41 @@ public class LogTaskFactory {
             }
         };
     }
+    
+    public static TimerTask sendEnrollPass(String openId, String xmmc, String checkdate, String name) {
+    	return new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					String url = "http://127.0.0.1:9999/gene/template/sendPass?openId={0}&xmmc={1}&jzsj={2}&name={3}";
+					Object object = restTemplate.getForObject(MessageFormat.format(url, openId, xmmc, checkdate, name), Object.class);
+					logger.error("审批通过的模板消息发送成功!", object);
+				} catch (RestClientException e) {
+					// TODO Auto-generated catch block
+					logger.error("审批通过的模板消息发送失败!", e);
+				}
+			}
+		};
+    }
+
+	public static TimerTask sendEnrollRefuse(String openId, String xmmc, String checkdate, String name) {
+		// TODO Auto-generated method stub
+    	return new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					String url = "http://127.0.0.1:9999/gene/template/sendRefuse?openId={0}&xmmc={1}&jzsj={2}&name={3}";
+					Object object = restTemplate.getForObject(MessageFormat.format(url, openId, xmmc, checkdate, name), Object.class);
+					logger.error("审批拒绝的模板消息发送成功!", object);
+				} catch (RestClientException e) {
+					// TODO Auto-generated catch block
+					logger.error("审批拒绝的模板消息发送失败!", e);
+				}
+			}
+		};
+	}
 }

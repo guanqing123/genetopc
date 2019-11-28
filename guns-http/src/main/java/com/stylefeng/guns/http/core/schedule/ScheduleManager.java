@@ -24,7 +24,7 @@ public class ScheduleManager {
 		return logManager;
 	}
 	
-	public void executeLog(TimerTask task) {
+	public void executeTask(TimerTask task) {
 		executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
 	}
 }

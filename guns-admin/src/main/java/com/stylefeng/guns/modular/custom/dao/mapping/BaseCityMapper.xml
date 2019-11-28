@@ -22,6 +22,7 @@
 		<if test="null!=condition and condition!=''">
 			and (city_name like concat('%',#{condition},'%') or province_name like concat('%',#{condition},'%'))
 		</if>
+		order by province_name asc
 	</select>
 
 </mapper>
