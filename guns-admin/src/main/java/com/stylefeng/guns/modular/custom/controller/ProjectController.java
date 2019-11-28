@@ -96,6 +96,16 @@ public class ProjectController extends BaseController {
     }
     
     /**
+     * 跳转批量添加城市
+     * @return
+     */
+    @RequestMapping("/project_citysadd/{projectId}")
+    public String projectCitysAdd(@PathVariable Integer projectId, Model model) {
+    	model.addAttribute("projectId", projectId);
+    	return PREFIX + "project_citysadd.html";
+    }
+    
+    /**
      * 跳转添加医院页面
      * @return
      */

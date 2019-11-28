@@ -87,6 +87,21 @@ ProjectCityDlg.modifyCity = function(column, pk, tip) {
 }
 
 /**
+ * 打开地区树
+ */
+ProjectCityDlg.openBatchAddCity = function(projectid) {
+    var index = layer.open({
+        type: 2,
+        title: '添加城市',
+        area: ['300px', '450px'], //宽高
+        fix: false, //不固定
+        maxmin: true,
+        content: Feng.ctxPath + '/project/project_citysadd/' + projectid
+    });
+    this.layerIndex = index;
+}
+
+/**
  * 打开添加城市页面
  */
 ProjectCityDlg.openAddCity = function(projectid) {
