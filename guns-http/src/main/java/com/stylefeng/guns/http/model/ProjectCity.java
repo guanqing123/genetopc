@@ -38,6 +38,11 @@ public class ProjectCity extends Model<ProjectCity> {
     @TableField("city_name")
     private String cityName;
     /**
+     * 省
+     */
+    @TableField("province_name")
+    private String provinceName;
+	/**
      * 联系人
      */
     private String person;
@@ -80,6 +85,14 @@ public class ProjectCity extends Model<ProjectCity> {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
+    
+    public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
 
     public String getPerson() {
         return person;
@@ -124,6 +137,7 @@ public class ProjectCity extends Model<ProjectCity> {
         "cityid=" + cityid +
         ", projectid=" + projectid +
         ", cityName=" + cityName +
+        ", provinceName=" + provinceName +
         ", person=" + person +
         ", phone=" + phone +
         ", createDate=" + createDate +

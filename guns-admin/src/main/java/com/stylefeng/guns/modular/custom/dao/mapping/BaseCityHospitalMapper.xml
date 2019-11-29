@@ -22,5 +22,20 @@
 			and hospital_name like concat('%',#{condition},'%')
 		</if>
 	</select>
+	
+	<!-- 城市数 -->
+	<resultMap type="com.stylefeng.guns.modular.custom.model.CityHospital" id="cityTreeMap">
+		<result column="province_name" property="provinceName"/>
+		<collection property="children" ofType="com.stylefeng.guns.modular.custom.model.CityHospital$City">
+			<id column="cityid" property="cityid"/>
+			<result column="city_name" property="cityName" />
+		</collection>
+	</resultMap>
+	
+	<select id="cityTree" resultMap="cityTreeMap">
+		select province_name,cityid,city_name 
+			from gene_base_city
+		order by province_name asc
+	</select>
 
 </mapper>

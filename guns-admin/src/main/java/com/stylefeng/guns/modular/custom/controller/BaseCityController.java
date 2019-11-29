@@ -1,6 +1,7 @@
 package com.stylefeng.guns.modular.custom.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.modular.custom.model.BaseCity;
 import com.stylefeng.guns.modular.custom.model.BaseCityHospital;
+import com.stylefeng.guns.modular.custom.model.CityHospital;
 import com.stylefeng.guns.modular.custom.service.IBaseCityHospitalService;
 import com.stylefeng.guns.modular.custom.service.IBaseCityService;
 
@@ -191,5 +193,16 @@ public class BaseCityController extends BaseController {
     @ResponseBody
     public Object detail(@PathVariable("baseCityId") Integer baseCityId) {
         return baseCityService.selectById(baseCityId);
+    }
+    
+    /**
+     * 地区树
+     * @return
+     */
+    @RequestMapping(value = "/cityTree")
+    @ResponseBody
+    public Object cityTree() {
+    	List<Map<String, Object>> results = baseCityHospitalService.cityTree();
+    	return results;
     }
 }

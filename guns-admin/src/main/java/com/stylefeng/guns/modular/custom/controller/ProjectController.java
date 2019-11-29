@@ -176,6 +176,16 @@ public class ProjectController extends BaseController {
     }
     
     /**
+     * 批量添加城市医院
+     */
+    @RequestMapping(value = "/batchAddCityAndHospital")
+    @ResponseBody
+    public Object batchAddCityAndHospital(Integer projectId, String ids) {
+    	projectService.batchAddCityAndHospital(projectId, ids);
+    	return SUCCESS_TIP;
+    }
+    
+    /**
      * 修改医院
      */
     @RequestMapping(value = "/hospitalModify")

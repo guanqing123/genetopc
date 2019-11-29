@@ -188,7 +188,7 @@ ProjectCityHospitalDlg.initColumn = function() {
         	title: '操作', field: 'operate', visible: true, align: 'center', valign: 'middle',
         	formatter: function(value, row, index) {
 				return [
-					'<button type="button" class="btn btn-xs btn-danger deletehospital" style="margin-bottom: 0px"><i class="fa fa-trash"></i>&nbsp;删除</button>'
+					'<button type="button" class="btn btn-xs btn-danger deletehospital" style="margin-bottom: 0px"><i class="fa fa-trash"></i></button>'
 				].join('');
 			},
 			events: 'operateHospital'

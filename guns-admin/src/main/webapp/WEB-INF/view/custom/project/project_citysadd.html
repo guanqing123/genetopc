@@ -11,15 +11,16 @@
 
         $("#btn_save").bind("click", function () {
             var ids = Feng.zTreeCheckedNodes("zTree");
-            var ajax = new $ax(Feng.ctxPath + "/role/setAuthority", function (data) {
-                Feng.success("分配角色成功!");
-                window.parent.Role.table.refresh();
+            var ajax = new $ax(Feng.ctxPath + "/project/batchAddCityAndHospital", function (data) {
+                Feng.success("添加城市成功!");
+                window.parent.ProjectCityDlg.table.refresh();
+                window.parent.ProjectCityHospitalDlg.table.refresh({projectid : $('#projectId').val()});
                 parent.layer.close(index);
             }, function (data) {
-                Feng.error("分配角色失败!"
+                Feng.error("添加城市失败!"
                     + data.responseJSON.message + "!");
             });
-            ajax.set("roleId", "1");
+            ajax.set("projectId", $("#projectId").val());
             ajax.set("ids", ids);
             ajax.start();
         });
@@ -40,8 +41,7 @@
             }
         };
 
-        var ztree = new $ZTree("zTree", "/menu/menuTreeListByRoleId/"
-            + "1");
+        var ztree = new $ZTree("zTree", "/baseCity/cityTree");
         ztree.setSettings(setting);
         ztree.init();
     }
@@ -52,9 +52,7 @@
 <div class="container" style="padding:  0px 10px !important;margin-top: -10px;text-align: center !important;">
     <div class="row">
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>${roleName!}</h5>
-            </div>
+        	<input type="hidden" id="projectId" value="${projectId}"/>
             <div class="ibox-content">
                 <ul id="zTree" class="ztree"></ul>
             </div>

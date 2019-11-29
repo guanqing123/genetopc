@@ -18,7 +18,7 @@
     </sql>
     
     <select id="getCityListByProjectid" resultMap="BaseResultMap">
-    	select * from gene_project_city where projectid = #{projectid} order by cityid desc
+    	select * from gene_project_city where projectid = #{projectid} order by province_name asc
     </select>
     
     <update id="cityModify">

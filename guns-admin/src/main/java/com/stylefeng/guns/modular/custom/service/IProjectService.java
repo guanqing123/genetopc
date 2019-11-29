@@ -43,4 +43,6 @@ public interface IProjectService extends IService<Project> {
 	void cityDelete(Integer cityid);
 
 	Tip projectDelete(Integer projectId);
+
+	void batchAddCityAndHospital(Integer projectId, String ids);
 }

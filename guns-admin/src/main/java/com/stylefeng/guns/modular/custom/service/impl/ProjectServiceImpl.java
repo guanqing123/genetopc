@@ -1,28 +1,34 @@
 package com.stylefeng.guns.modular.custom.service.impl;
 
-import com.stylefeng.guns.modular.custom.model.Enroll;
-import com.stylefeng.guns.modular.custom.model.Project;
-import com.stylefeng.guns.modular.custom.model.ProjectCity;
-import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.core.base.tips.SuccessTip;
 import com.stylefeng.guns.core.base.tips.Tip;
 import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.core.util.Convert;
 import com.stylefeng.guns.core.util.OssUtil;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.custom.dao.BaseCityHospitalMapper;
+import com.stylefeng.guns.modular.custom.dao.BaseCityMapper;
 import com.stylefeng.guns.modular.custom.dao.EnrollMapper;
 import com.stylefeng.guns.modular.custom.dao.ProjectCityHospitalMapper;
 import com.stylefeng.guns.modular.custom.dao.ProjectCityMapper;
 import com.stylefeng.guns.modular.custom.dao.ProjectMapper;
+import com.stylefeng.guns.modular.custom.model.BaseCity;
+import com.stylefeng.guns.modular.custom.model.BaseCityHospital;
+import com.stylefeng.guns.modular.custom.model.Enroll;
+import com.stylefeng.guns.modular.custom.model.Project;
+import com.stylefeng.guns.modular.custom.model.ProjectCity;
+import com.stylefeng.guns.modular.custom.model.ProjectCityHospital;
 import com.stylefeng.guns.modular.custom.service.IProjectService;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -43,6 +49,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 	
 	@Autowired
 	private EnrollMapper enrollMapper;
+	
+	@Autowired
+	private BaseCityMapper baseCityMapper;
+	
+	@Autowired
+	private BaseCityHospitalMapper baseCityHospitalMapper;
 	
 	@Autowired
 	private OssUtil ossUtil;
@@ -140,5 +152,43 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 		if (ToolUtil.isNotEmpty(project.getJdtKey()))
 			ossUtil.deleteObject(project.getJdtKey());
 		return new SuccessTip();
+	}
+
+	@Transactional
+	@Override
+	public void batchAddCityAndHospital(Integer projectId, String ids) {
+		// TODO Auto-generated method stub
+		String[] strs = Convert.toStrArray(",", ids);
+		for (String str : strs) {
+			Integer cityId = Integer.valueOf(str);
+			if (cityId < 0)
+				continue;
+			// 查询基础城市
+			BaseCity baseCity = this.baseCityMapper.selectById(cityId);
+			
+			// 构建项目城市对象
+			ProjectCity city = new ProjectCity();
+			BeanUtils.copyProperties(baseCity, city);
+			city.setProjectid(projectId);
+			
+			// 保存项目城市
+			this.projectCityMapper.insert(city);
+			
+			// 查询基础医院
+			EntityWrapper<BaseCityHospital> wrapper = new EntityWrapper<>();
+			wrapper.eq("cityid", cityId);
+			List<BaseCityHospital> hospitals = this.baseCityHospitalMapper.selectList(wrapper);
+			
+			for (BaseCityHospital baseCityHospital : hospitals) {
+				// 构建项目医院对象
+				ProjectCityHospital cityHospital = new ProjectCityHospital();
+				BeanUtils.copyProperties(baseCityHospital, cityHospital);
+				cityHospital.setCityid(city.getCityid());
+				cityHospital.setProjectid(projectId);
+				
+				// 保存项目医院
+				this.projectCityHospitalMapper.insert(cityHospital);
+			}
+		}
 	}
 }

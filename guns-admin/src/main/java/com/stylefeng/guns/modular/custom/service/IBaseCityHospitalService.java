@@ -3,6 +3,7 @@ package com.stylefeng.guns.modular.custom.service;
 import com.stylefeng.guns.modular.custom.model.BaseCityHospital;
 
 import java.util.List;
+import java.util.Map;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
@@ -20,4 +21,5 @@ public interface IBaseCityHospitalService extends IService<BaseCityHospital> {
 	List<BaseCityHospital> getBaseCityHospitalListByCondition(Page<BaseCityHospital> page, Integer baseCityId,
 			String condition);
 
+	List<Map<String, Object>> cityTree();
 }
