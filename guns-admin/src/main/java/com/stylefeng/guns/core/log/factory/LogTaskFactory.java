@@ -112,7 +112,7 @@ public class LogTaskFactory {
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					String url = "http://127.0.0.1:9999/gene/template/sendPass?openId={0}&xmmc={1}&jzsj={2}&name={3}";
+					String url = "http://wxdev.hongyancloud.com/gene/template/sendPass?openId={0}&xmmc={1}&jzsj={2}&name={3}";
 					Object object = restTemplate.getForObject(MessageFormat.format(url, openId, xmmc, checkdate, name), Object.class);
 					logger.error("审批通过的模板消息发送成功!", object);
 				} catch (RestClientException e) {
@@ -131,7 +131,7 @@ public class LogTaskFactory {
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					String url = "http://127.0.0.1:9999/gene/template/sendRefuse?openId={0}&xmmc={1}&jzsj={2}&name={3}";
+					String url = "http://wxdev.hongyancloud.com/gene/template/sendRefuse?openId={0}&xmmc={1}&jzsj={2}&name={3}";
 					Object object = restTemplate.getForObject(MessageFormat.format(url, openId, xmmc, checkdate, name), Object.class);
 					logger.error("审批拒绝的模板消息发送成功!", object);
 				} catch (RestClientException e) {

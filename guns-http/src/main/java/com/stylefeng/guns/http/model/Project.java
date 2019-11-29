@@ -94,7 +94,7 @@ public class Project extends Model<Project> {
      * 城市数组
      */
     @TableField(exist = false)
-    private List<ProjectCity> cities;
+    private List<ProjectProvince> provinces;
 
 	public Integer getProjectid() {
         return projectid;
@@ -216,14 +216,14 @@ public class Project extends Model<Project> {
         this.createDate = createDate;
     }
     
-    public List<ProjectCity> getCities() {
-		return cities;
+	public List<ProjectProvince> getProvinces() {
+		return provinces;
 	}
 
-	public void setCities(List<ProjectCity> cities) {
-		this.cities = cities;
+	public void setProvinces(List<ProjectProvince> provinces) {
+		this.provinces = provinces;
 	}
-
+   
     @Override
     protected Serializable pkVal() {
         return this.projectid;

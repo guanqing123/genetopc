@@ -52,28 +52,33 @@
 		<result column="xmjs" property="xmjs" />
 		<result column="cjbz" property="cjbz" />
 		<result column="create_date" property="createDate" />
-		<!-- 城市 -->
-		<collection property="cities" ofType="com.stylefeng.guns.http.model.ProjectCity">
-			<id column="cityid" property="cityid" />
-			<result column="city_name" property="cityName" />
-			<result column="province_name" property="provinceName"/>
-			<result column="person" property="person"/>
-			<result column="phone" property="phone" />
-			<result column="create_date" property="createDate" />
-			<!-- 医院 -->
-			<collection property="hospitals" ofType="com.stylefeng.guns.http.model.ProjectCityHospital">
-				<id column="hospitalid" property="hospitalid" />
-				<result column="hospital_name" property="hospitalName" />
-				<result column="department_name" property="departmentName" />
-				<result column="create_date" property="createDate" />
+		<!-- 省 -->
+		<collection property="provinces" ofType="com.stylefeng.guns.http.model.ProjectProvince">
+			<result column="province_name" property="provinceName" />
+			<!-- 城市 -->
+			<collection property="cities" ofType="com.stylefeng.guns.http.model.ProjectCity">
+				<id column="cityid" property="cityid" />
+				<result column="city_name" property="cityName" />
+				<result column="person" property="person"/>
+				<result column="phone" property="phone" />
+				<result column="city_create" property="createDate" />
+				<!-- 医院 -->
+				<collection property="hospitals" ofType="com.stylefeng.guns.http.model.ProjectCityHospital">
+					<id column="hospitalid" property="hospitalid" />
+					<result column="hospital_name" property="hospitalName" />
+					<result column="department_name" property="departmentName" />
+					<result column="hospital_date" property="createDate" />
+				</collection>
 			</collection>
 		</collection>
+
 	</resultMap>
 	
 	<select id="getProjectDetail" resultMap="BaseProjectMap">
 		select a.projectid,a.xmmc,a.syz,a.xmyy,a.state,a.jzsj,a.jd,a.jd_order,a.slt_key,a.slt_path,a.jdt_key,a.jdt_path,a.xmjs,a.cjbz,a.create_date,
-					b.cityid,b.city_name,b.province_name,b.person,b.phone,b.create_date,
-					c.hospitalid,c.hospital_name,c.department_name,c.create_date
+					b.province_name,
+					b.cityid,b.city_name,b.person,b.phone,b.create_date city_date,
+					c.hospitalid,c.hospital_name,c.department_name,c.create_date hospital_date
 			from gene_project a 
 				left join gene_project_city b on a.projectid=b.projectid
 				left join gene_project_city_hospital c on b.cityid = c.cityid

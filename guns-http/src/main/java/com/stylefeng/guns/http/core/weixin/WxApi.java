@@ -56,7 +56,7 @@ public class WxApi {
 				accessToken.setLastRefreshTime(System.currentTimeMillis());
 				redisUtil.set(wxProperties.getAppId(), JSON.toJSONString(accessToken), AccessToken.EXPIRE_TIME);
 			} else {
-				throw new GunsException(500, "accessToken获取失败");
+				throw new GunsException(500, "accessToken获取失败>>accessToken>>"+accessToken);
 			}
 			return accessToken;
 		} else {

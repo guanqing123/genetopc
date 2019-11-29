@@ -29,7 +29,7 @@ public class TemplateUtil {
 		WechatTemplate template = new WechatTemplate();
 		template.setTouser(openId);
 		template.setTemplate_id(WxConstant.TEMPLATE_NEW_APPOINTMENT_REMINDER);
-		template.setUrl("https://www.baidu.com");
+		template.setUrl("http://wxdev.hongyancloud.com/wx#/PersonCenter/Wait");
 		
 		Map<String, TemplateData> data = new HashMap<>();
 		TemplateData first = new TemplateData();
@@ -64,7 +64,7 @@ public class TemplateUtil {
 		WechatTemplate template = new WechatTemplate();
 		template.setTouser(openId);
 		template.setTemplate_id(WxConstant.TEMPLATE_ENROLL_PASS);
-		template.setUrl("https://www.baidu.com");
+		template.setUrl("http://wxdev.hongyancloud.com/wx#/PersonCenter/Pass");
 		
 		Map<String, TemplateData> data = new HashMap<>();
 		TemplateData first = new TemplateData();
@@ -105,28 +105,28 @@ public class TemplateUtil {
 		WechatTemplate template = new WechatTemplate();
 		template.setTouser(openId);
 		template.setTemplate_id(WxConstant.TEMPLATE_ENROLL_REFUSE);
-		template.setUrl("https://www.baidu.com");
+		template.setUrl("http://wxdev.hongyancloud.com/wx#/PersonCenter/Refuse");
 		
 		Map<String, TemplateData> data = new HashMap<>();
 		TemplateData first = new TemplateData();
 		first.setValue("您报名的失败");
-		first.setColor("#173177");
+		first.setColor("#FF0000");
 		
 		TemplateData keyword1 = new TemplateData();
 		keyword1.setValue(xmmc);
-		keyword1.setColor("#173177");
+		keyword1.setColor("#FF0000");
 		
 		TemplateData keyword2 = new TemplateData();
 		keyword2.setValue(jzsj);
-		keyword2.setColor("#173177");
+		keyword2.setColor("#FF0000");
 		
 		TemplateData keyword3 = new TemplateData();
 		keyword3.setValue(name);
-		keyword3.setColor("#173177");
+		keyword3.setColor("#FF0000");
 		
 		TemplateData remark = new TemplateData();
 		remark.setValue("请查看详情,按要求补提交材料");
-		remark.setColor("#173177");
+		remark.setColor("#FF0000");
 		
 		data.put("first", first);
 		data.put("keyword1", keyword1);
