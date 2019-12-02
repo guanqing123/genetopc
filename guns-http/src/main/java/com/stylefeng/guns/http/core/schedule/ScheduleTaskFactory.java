@@ -26,14 +26,14 @@ public class ScheduleTaskFactory {
 	 * 发送新预约提醒
 	 * @return
 	 */
-	public static TimerTask sendNewAppointmentReminder(final String openId, final Integer projectid, final String commitDate) {
+	public static TimerTask sendNewAppointmentReminder(final String openId, final Integer projectid, final String commitDate, final String remark) {
 		return new TimerTask() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
 					Project project = projectMapper.selectById(projectid);
-					templateUtil.sendNewAppointmentReminder(openId, project.getXmmc(), commitDate);
+					templateUtil.sendNewAppointmentReminder(openId, project.getXmmc(), commitDate, remark);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					logger.error("发送新预约提醒失败!", e);

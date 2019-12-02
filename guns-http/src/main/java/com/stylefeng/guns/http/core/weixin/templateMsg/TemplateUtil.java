@@ -25,11 +25,11 @@ public class TemplateUtil {
 	/**
 	 * 新预约提醒
 	 */
-	public void sendNewAppointmentReminder (String openId, String xmmc, String commitDate) {
+	public void sendNewAppointmentReminder (String openId, String xmmc, String commitDate, String remarkContent) {
 		WechatTemplate template = new WechatTemplate();
 		template.setTouser(openId);
 		template.setTemplate_id(WxConstant.TEMPLATE_NEW_APPOINTMENT_REMINDER);
-		template.setUrl("http://wxdev.hongyancloud.com/wx#/PersonCenter/Wait");
+		template.setUrl("http://wxdev.genetopclinic.com/wx#/PersonCenter/Wait");
 		
 		Map<String, TemplateData> data = new HashMap<>();
 		TemplateData first = new TemplateData();
@@ -45,7 +45,7 @@ public class TemplateUtil {
 		keyword2.setColor("#173177");
 		
 		TemplateData remark = new TemplateData();
-		remark.setValue("请及时处理");
+		remark.setValue(remarkContent);
 		remark.setColor("#173177");
 		
 		data.put("first", first);
@@ -64,7 +64,7 @@ public class TemplateUtil {
 		WechatTemplate template = new WechatTemplate();
 		template.setTouser(openId);
 		template.setTemplate_id(WxConstant.TEMPLATE_ENROLL_PASS);
-		template.setUrl("http://wxdev.hongyancloud.com/wx#/PersonCenter/Pass");
+		template.setUrl("http://wxdev.genetopclinic.com/wx#/PersonCenter/Pass");
 		
 		Map<String, TemplateData> data = new HashMap<>();
 		TemplateData first = new TemplateData();
@@ -105,7 +105,7 @@ public class TemplateUtil {
 		WechatTemplate template = new WechatTemplate();
 		template.setTouser(openId);
 		template.setTemplate_id(WxConstant.TEMPLATE_ENROLL_REFUSE);
-		template.setUrl("http://wxdev.hongyancloud.com/wx#/PersonCenter/Refuse");
+		template.setUrl("http://wxdev.genetopclinic.com//wx#/PersonCenter/Refuse");
 		
 		Map<String, TemplateData> data = new HashMap<>();
 		TemplateData first = new TemplateData();

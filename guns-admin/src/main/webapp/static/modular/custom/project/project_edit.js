@@ -201,10 +201,6 @@ $(function() {
             theme: 'default'
         }
     });
-    
-    // summernote赋值
-    $("#xmjs").summernote('code', $("#xmjsContent").val());
-    $("#cjbz").summernote('code', $("#cjbzContent").val());
 });
 
 
