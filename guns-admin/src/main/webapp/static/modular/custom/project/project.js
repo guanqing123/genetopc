@@ -253,7 +253,24 @@ $(function () {
     table.setPaginationType("server");
     Project.table = table.init();
     
-    window.onresize = function() {
+    function debounce(fn, delay) {
+	  var timer = null;
+	  return function () {
+	    var context = this, args = arguments;
+	    clearTimeout(timer);
+	    timer = setTimeout(function () {
+	      fn.apply(context, args);
+	    }, delay);
+	  };
+	}
+    
+    window.addEventListener('resize', debounce(function(){
+    	console.log('abc');
     	Project.search();
-    }
+    },500));
+/*    parent.$("#flexible").click(function(){
+    	window.onload = function() {
+    		Project.search();	
+    	}
+    });*/
 });
