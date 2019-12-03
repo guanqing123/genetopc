@@ -25,9 +25,9 @@ public class TemplateUtil {
 	/**
 	 * 新预约提醒
 	 */
-	public void sendNewAppointmentReminder (String openId, String xmmc, String commitDate, String remarkContent) {
+	public void sendNewAppointmentReminder (String xmmc, String commitDate, String remarkContent) {
 		WechatTemplate template = new WechatTemplate();
-		template.setTouser(openId);
+		template.setTouser(WxConstant.REMAIND_USER);
 		template.setTemplate_id(WxConstant.TEMPLATE_NEW_APPOINTMENT_REMINDER);
 		template.setUrl("http://wxdev.genetopclinic.com/wx#/PersonCenter/Wait");
 		
@@ -54,7 +54,7 @@ public class TemplateUtil {
 		data.put("remark", remark);
 		template.setData(data);
 		TemplateResponse response = wxApi.sendTemplateMessage(template, TemplateResponse.class);
-		log.error("新预约提醒: openId>"+openId+"||xmmc="+xmmc+"||response="+response);
+		log.error("新预约提醒:xmmc="+xmmc+"||response="+response);
 	}
 	
 	/**

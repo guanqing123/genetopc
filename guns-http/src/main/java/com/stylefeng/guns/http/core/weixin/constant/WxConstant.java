@@ -22,6 +22,8 @@ public class WxConstant {
     
     //新预约提醒
     public static final String TEMPLATE_NEW_APPOINTMENT_REMINDER = "M_XJHgZ6S_mNiBoshlVZYi1eh5d3zCi0vpKML3SvU_w";
+    //提醒谁
+    public static final String REMAIND_USER = "oAxr51ckmTKZn3-pOLQn8vRfp9uM";
     //报名成功
     public static final String TEMPLATE_ENROLL_PASS = "FlMZuUAXj9_ImnSf9Ls20eWQKXA75JErUEx429oZ4eE";
     //报名失败
